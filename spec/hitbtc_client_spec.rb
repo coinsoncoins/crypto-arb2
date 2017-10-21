@@ -7,7 +7,11 @@ RSpec.describe HitBtcClient do
       hitbtc_client = HitBtcClient.new
       snapshot = open("./spec/data/hitbtc_api_call.json").read;
       markets = hitbtc_client.parse_snapshot(snapshot)
-      expect(markets["BCNBTC"]).to eq(0.0000002504)
+      expect(markets["BCNBTC"]).to eq({
+        bid: 0.0000002501,
+        ask: 0.0000002504,
+        volume: 206.80351967
+      })
     end
   end
 end

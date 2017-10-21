@@ -21,7 +21,11 @@ class BittrexClient
   def parse_markets(markets)
     markets.each do |market|
       market_name = market["MarketName"].split("-").reverse.join
-      @markets[market_name] = market["Last"].to_f
+      @markets[market_name] = {
+        bid: market["Bid"].to_f, 
+        ask: market["Ask"].to_f,
+        volume: market["BaseVolume"].to_f
+      }
     end
     @markets
   end
