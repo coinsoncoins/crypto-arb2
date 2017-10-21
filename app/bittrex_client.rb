@@ -10,7 +10,11 @@ class BittrexClient
   def get_snapshot()
     url = "https://bittrex.com/api/v1.1/public/getmarketsummaries"
     source = open(url).read
-    json_obj = JSON.parse(source)
+    parse_snapshot(source)
+  end
+
+  def parse_snapshot(snapshot_string)
+    json_obj = JSON.parse(snapshot_string)
     parse_markets(json_obj["result"])
   end
 
@@ -22,6 +26,3 @@ class BittrexClient
   end
 
 end
-
-client = BittrexClient.new
-puts client.get_snapshot
