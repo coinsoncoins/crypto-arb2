@@ -18,38 +18,16 @@ def main()
   binance_exchange = BinanceClient.new.get_exchange()
   liqui_exchange = LiquiClient.new.get_exchange()
 
+  puts 'finding arb opps'
   arb_opps = []
-  puts "finding arbs from bittrex..."
-  arb_opps += ArbFinder.new(bittrex_exchange, hitbtc_exchange).compare
-  arb_opps += ArbFinder.new(bittrex_exchange, cryptopia_exchange).compare
-  arb_opps += ArbFinder.new(bittrex_exchange, binance_exchange).compare
-  arb_opps += ArbFinder.new(bittrex_exchange, liqui_exchange).compare
-
-  puts "finding arbs from binance..."
-  arb_opps += ArbFinder.new(binance_exchange, bittrex_exchange).compare
-  arb_opps += ArbFinder.new(binance_exchange, cryptopia_exchange).compare
-  arb_opps += ArbFinder.new(binance_exchange, hitbtc_exchange).compare
-  arb_opps += ArbFinder.new(binance_exchange, liqui_exchange).compare
-
-  puts "finding arbs from hitbtc"
-  arb_opps += ArbFinder.new(hitbtc_exchange, bittrex_exchange).compare
-  arb_opps += ArbFinder.new(hitbtc_exchange, cryptopia_exchange).compare
-  arb_opps += ArbFinder.new(hitbtc_exchange, binance_exchange).compare
-  arb_opps += ArbFinder.new(hitbtc_exchange, liqui_exchange).compare
-
-  puts "finding arbs from cryptopia"
-  arb_opps += ArbFinder.new(cryptopia_exchange, bittrex_exchange).compare
-  arb_opps += ArbFinder.new(cryptopia_exchange, hitbtc_exchange).compare
-  arb_opps += ArbFinder.new(cryptopia_exchange, binance_exchange).compare
-  arb_opps += ArbFinder.new(cryptopia_exchange, liqui_exchange).compare
-
-  puts "finding arbs from liqui"
-  arb_opps += ArbFinder.new(liqui_exchange, bittrex_exchange).compare
-  arb_opps += ArbFinder.new(liqui_exchange, hitbtc_exchange).compare
-  arb_opps += ArbFinder.new(liqui_exchange, binance_exchange).compare 
-  arb_opps += ArbFinder.new(liqui_exchange, cryptopia_exchange).compare
-
-
+  exchanges = [bittrex_exchange, hitbtc_exchange, cryptopia_exchange, binance_exchange, liqui_exchange]
+  exchanges.each do |exchange1|
+    exchanges.each do |exchange2|
+      next if exchange1 == exchange2
+      arb_opps += ArbFinder.new(exchange1, exchange2).compare
+    end
+  end
+  
   arb_opps.each do |arp_opp|
     puts MessageFormatter.arb_opp(arp_opp)
   end
