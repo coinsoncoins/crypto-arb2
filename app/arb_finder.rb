@@ -4,6 +4,8 @@ require './app/arb_opp'
 class ArbFinder
   attr_reader :arb_opps
 
+  ARB_THRESHOLD_PERCENT = 5
+
   def initialize(exchange1, exchange2)
     @arb_opps = []
     @exchange1 = exchange1
@@ -16,7 +18,7 @@ class ArbFinder
       if @exchange2.has_crypto?(crypto1)
         crypto2 = @exchange2.get_crypto_like(crypto1)
         arb_opp = ArbOpp.new(crypto1, crypto2)
-        if arb_opp.gain_percent > 5 && arb_opp.valid?
+        if arb_opp.gain_percent > ARB_THRESHOLD_PERCENT && arb_opp.valid?
           @arb_opps.push(arb_opp)
         end
       end

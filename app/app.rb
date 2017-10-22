@@ -5,6 +5,7 @@ require './app/hitbtc_client'
 require './app/cryptopia_client'
 require './app/liqui_client'
 require './app/poloniex_client'
+require './app/kraken_client'
 require './app/arb_finder'
 require './app/arb_opp'
 require './app/message_formatter'
@@ -19,10 +20,12 @@ def main()
   binance_exchange = BinanceClient.new.get_exchange()
   liqui_exchange = LiquiClient.new.get_exchange()
   poloniex_exchange = PoloniexClient.new.get_exchange()
+  kraken_exchange = KrakenClient.new.get_exchange()
 
   puts 'finding arb opps'
   arb_opps = []
-  exchanges = [bittrex_exchange, hitbtc_exchange, cryptopia_exchange, binance_exchange, liqui_exchange, poloniex_exchange]
+  exchanges = [bittrex_exchange, hitbtc_exchange, cryptopia_exchange, binance_exchange, liqui_exchange, 
+    poloniex_exchange, kraken_exchange]
   exchanges.each do |exchange1|
     exchanges.each do |exchange2|
       next if exchange1 == exchange2
