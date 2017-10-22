@@ -24,4 +24,8 @@ class ArbOpp
     @crypto1.name
   end
 
+  def valid?()
+    @crypto1.valid? && @crypto2.valid?
+  end
+
 end

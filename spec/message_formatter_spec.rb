@@ -9,7 +9,7 @@ RSpec.describe MessageFormatter do
       crypto2 = Crypto.new(exchange: Exchange.new('hitbtc'), name: 'BTCUSD', bid: 6060, ask: 6070, volume_24h: 2_000_000)
       arb_opp = ArbOpp.new(crypto1, crypto2)
       message = MessageFormatter.arb_opp(arb_opp)
-      expected_message = "Buy BTCUSD at bittrex at ask 6000.0 (volume 1000000.0) and sell at hitbtc at bid 6060.0 (volume 2000000.0) for gain 1.0%"
+      expected_message = "Buy BTCUSD at bittrex at ask 6000.00000000 (volume 1000000.0) and sell at hitbtc at bid 6060.00000000 (volume 2000000.0) for gain 1.0%"
       expect(message).to eq(expected_message)
     end
   end

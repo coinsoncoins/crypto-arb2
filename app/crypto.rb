@@ -8,4 +8,8 @@ class Crypto
     @volume_24h = volume_24h.to_f
     @exchange = exchange
   end
+
+  def valid?()
+    @bid > 0.00000001 && @ask > 0.00000001
+  end
 end

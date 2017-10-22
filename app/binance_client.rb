@@ -1,28 +1,27 @@
 
-# require 'open-uri'
-# require 'json'
+require 'open-uri'
+require 'json'
+require './app/exchange'
 
-# class BinanceClient
-#   def initialize()
-#     @markets = {}
-#   end
+class BinanceClient
+  attr_accessor :url, :exchange
+  def initialize()
+    @exchange = Exchange.new('binance')
+    @url = "https://www.binance.com/api/v1/ticker/allBookTickers"
+  end
 
-#   def get_snapshot()
-#     url = "https://www.binance.com/api/v1/ticker/allPrices"
-#     source = open(url).read
-#     parse_snapshot(source)
-#   end
+  def get_exchange()
+    source = open(@url).read
+    parse_snapshot(JSON.parse(source))
+  end
 
-#   def parse_snapshot(snapshot_string)
-#     json_obj = JSON.parse(snapshot_string)
-#     parse_markets(json_obj)
-#   end
+  def parse_snapshot(snapshot)
+    snapshot.each do |tradeable|
+      name = tradeable["symbol"].split("-").reverse.join
+      crypto = Crypto.new(name: tradeable["symbol"], bid: tradeable["bidPrice"], ask: tradeable["askPrice"], volume_24h: nil)
+      @exchange.add_crypto(crypto)
+    end
+    @exchange
+  end
 
-#   def parse_markets(markets)
-#     markets.each do |market|
-#       @markets[market["symbol"]] = market["price"].to_f
-#     end
-#     @markets
-#   end
-
-# end
+end
