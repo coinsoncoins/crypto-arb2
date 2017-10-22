@@ -1,32 +1,28 @@
 
 require 'open-uri'
 require 'json'
+require './app/exchange'
 
 class HitBtcClient
+  attr_accessor :url, :exchange
   def initialize()
-    @markets = {}
+    @exchange = Exchange.new('hitbtc')
+    @url = "https://api.hitbtc.com/api/1/public/ticker"
   end
 
-  def get_snapshot()
-    url = "https://api.hitbtc.com/api/1/public/ticker"
-    source = open(url).read
-    parse_snapshot(source)
+  def get_exchange()
+    source = open(@url).read
+    parse_snapshot(JSON.parse(source))
   end
 
-  def parse_snapshot(snapshot_string)
-    json_obj = JSON.parse(snapshot_string)
-    parse_markets(json_obj)
-  end
-
-  def parse_markets(markets)
-    markets.each do |key, value|
-      @markets[key] = {
-        ask: value["ask"].to_f,
-        bid: value["bid"].to_f,
-        volume: value["volume_quote"].to_f
-      }
+  def parse_snapshot(snapshot)
+    # snapshot is hash with keys being the crypto-tradingpair
+    # {"BCNBTC":{"ask":"0.0000002504","bid":"0.0000002501","last":"0.0000002504",...
+    snapshot.each do |key, value| 
+      crypto = Crypto.new(name: key, bid: value["bid"], ask: value["ask"], volume_24h: value["volume_quote"])
+      @exchange.add_crypto(crypto)
     end
-    @markets
+    @exchange
   end
 
 end
