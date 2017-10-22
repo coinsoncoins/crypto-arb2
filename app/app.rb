@@ -15,6 +15,7 @@ require './app/message_formatter'
 def main()
 
   puts "getting exchange data..."
+  
   bittrex_exchange = BittrexClient.new.get_exchange()
   hitbtc_exchange = HitBtcClient.new.get_exchange()
   cryptopia_exchange = CryptopiaClient.new.get_exchange()
