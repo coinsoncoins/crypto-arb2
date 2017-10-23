@@ -29,7 +29,7 @@ class CryptoPair
   # end
 
   def self.parse_base(name)
-    base = /BTC$|ETC$|LTC$/.match(name).to_s
+    base = /BTC$|ETC$|LTC$|EUR$|USD$|USTD$/.match(name).to_s
     crypto = name.sub(base, '')
     [crypto, base]
   end
