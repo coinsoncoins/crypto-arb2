@@ -11,7 +11,7 @@ RSpec.describe PoloniexClient do
       
       exchange = poloniex_client.get_exchange()
       expect(exchange.name).to eq('poloniex')
-      expected_crypto = Crypto.new(name: 'BCNBTC', bid: 0.00000024, ask: 0.00000025, volume_24h: 19.37260896)
+      expected_crypto = CryptoPair.new(name: 'BCNBTC', bid: 0.00000024, ask: 0.00000025, volume_24h: 19.37260896)
       %i[name bid ask volume_24h].each do |value|
         expect(exchange.cryptos[0].send(value)).to eq(expected_crypto.send(value))
       end

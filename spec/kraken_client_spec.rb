@@ -13,12 +13,12 @@ RSpec.describe KrakenClient do
       
       exchange = kraken_client.get_exchange()
       expect(exchange.name).to eq('kraken')
-      expected_crypto = Crypto.new(name: 'BCHEUR', bid: 283.500000, ask: 286.200000, volume_24h: 2995.54482595)
+      expected_crypto = CryptoPair.new(name: 'BCHEUR', bid: 283.500000, ask: 286.200000, volume_24h: 2995.54482595)
       %i[name bid ask volume_24h].each do |value|
         expect(exchange.cryptos[0].send(value)).to eq(expected_crypto.send(value))
       end
       # make sure altnames work + make sure XBT is converted to BTC
-      expected_crypto = Crypto.new(name: 'ICNBTC', bid: 0.000192, ask: 0.000194, volume_24h: 123018.32824442)
+      expected_crypto = CryptoPair.new(name: 'ICNBTC', bid: 0.000192, ask: 0.000194, volume_24h: 123018.32824442)
       %i[name bid ask volume_24h].each do |value|
         expect(exchange.cryptos[22].send(value)).to eq(expected_crypto.send(value))
       end

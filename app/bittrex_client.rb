@@ -20,7 +20,7 @@ class BittrexClient
   def parse_snapshot(snapshot)
     snapshot.each do |tradeable|
       name = tradeable["MarketName"].split("-").reverse.join
-      crypto = Crypto.new(name: name, bid: tradeable["Bid"], ask: tradeable["Ask"], volume_24h: tradeable["BaseVolume"])
+      crypto = CryptoPair.new(name: name, bid: tradeable["Bid"], ask: tradeable["Ask"], volume_24h: tradeable["BaseVolume"])
       @exchange.add_crypto(crypto)
     end
     @exchange

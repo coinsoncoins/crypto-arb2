@@ -18,7 +18,7 @@ class BinanceClient
   def parse_snapshot(snapshot)
     snapshot.each do |tradeable|
       name = tradeable["symbol"].split("-").reverse.join
-      crypto = Crypto.new(name: tradeable["symbol"], bid: tradeable["bidPrice"], ask: tradeable["askPrice"], volume_24h: nil)
+      crypto = CryptoPair.new(name: tradeable["symbol"], bid: tradeable["bidPrice"], ask: tradeable["askPrice"], volume_24h: nil)
       @exchange.add_crypto(crypto)
     end
     @exchange

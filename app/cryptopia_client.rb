@@ -20,7 +20,7 @@ class CryptopiaClient
   def parse_snapshot(snapshot)
     snapshot.each do |tradeable|
       name = tradeable["Label"].split("/").join
-      crypto = Crypto.new(name: name, bid: tradeable["BidPrice"], ask: tradeable["AskPrice"], volume_24h: tradeable["BaseVolume"])
+      crypto = CryptoPair.new(name: name, bid: tradeable["BidPrice"], ask: tradeable["AskPrice"], volume_24h: tradeable["BaseVolume"])
       @exchange.add_crypto(crypto)
     end
     @exchange

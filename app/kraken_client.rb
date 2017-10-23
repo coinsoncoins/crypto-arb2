@@ -26,7 +26,7 @@ class KrakenClient
   def parse_snapshot(snapshot, altnames)
     snapshot.each do |key, value| 
       name = altnames[key]["altname"].gsub('XBT', 'BTC')
-      crypto = Crypto.new(name: name, bid: value["b"][0], ask: value["a"][0], volume_24h: value["v"][1])
+      crypto = CryptoPair.new(name: name, bid: value["b"][0], ask: value["a"][0], volume_24h: value["v"][1])
       @exchange.add_crypto(crypto)
     end
     @exchange

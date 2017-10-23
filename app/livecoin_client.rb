@@ -20,7 +20,7 @@ class LivecoinClient
     snapshot.each do |tradeable|
       name = tradeable["symbol"].gsub("/", '')
       volume = tradeable["volume"].to_f * tradeable["last"].to_f # volume in bitcoin
-      crypto = Crypto.new(name: name, bid: tradeable["best_bid"], ask: tradeable["best_ask"], volume_24h: volume)
+      crypto = CryptoPair.new(name: name, bid: tradeable["best_bid"], ask: tradeable["best_ask"], volume_24h: volume)
       @exchange.add_crypto(crypto)
     end
     @exchange

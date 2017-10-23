@@ -24,7 +24,7 @@
 #   def parse_snapshot(snapshot)
 #     snapshot.each do |key, value| 
 #       name = key.gsub('_', '').upcase
-#       crypto = Crypto.new(name: name, bid: value["buy"], ask: value["sell"], volume_24h: value["vol"])
+#       crypto = CryptoPair.new(name: name, bid: value["buy"], ask: value["sell"], volume_24h: value["vol"])
 #       @exchange.add_crypto(crypto)
 #     end
 #     @exchange

@@ -12,7 +12,7 @@ RSpec.describe LivecoinClient do
       exchange = livecoin_client.get_exchange()
       expect(exchange.name).to eq('livecoin')
       volume = 1035.08384668 * 0.00050001
-      expected_crypto = Crypto.new(name: 'BNTBTC', bid: 0.0002501, ask: 0.00064996, volume_24h: volume)
+      expected_crypto = CryptoPair.new(name: 'BNTBTC', bid: 0.0002501, ask: 0.00064996, volume_24h: volume)
       %i[name bid ask volume_24h].each do |value|
         expect(exchange.cryptos[0].send(value)).to eq(expected_crypto.send(value))
       end

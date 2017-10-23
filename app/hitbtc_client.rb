@@ -19,7 +19,7 @@ class HitBtcClient
     # snapshot is hash with keys being the crypto-tradingpair
     # {"BCNBTC":{"ask":"0.0000002504","bid":"0.0000002501","last":"0.0000002504",...
     snapshot.each do |key, value| 
-      crypto = Crypto.new(name: key, bid: value["bid"], ask: value["ask"], volume_24h: value["volume_quote"])
+      crypto = CryptoPair.new(name: key, bid: value["bid"], ask: value["ask"], volume_24h: value["volume_quote"])
       @exchange.add_crypto(crypto)
     end
     @exchange

@@ -1,6 +1,6 @@
-class Crypto
+class CryptoPair
 
-  attr_accessor :name, :bid, :ask, :exchange, :base_name, :pair_name, :eth_proxy
+  attr_accessor :name, :bid, :ask, :exchange, :base_name, :pair_name
   attr_accessor :volume_24h # volume is denominated in base currency
   def initialize(name:, bid: nil, ask: nil, volume_24h: nil, exchange: nil)
     # @pair_name = name

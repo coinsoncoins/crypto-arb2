@@ -1,5 +1,5 @@
 
-require './app/crypto'
+require './app/crypto_pair'
 
 class ArbOpp
   attr_reader :crypto, :exchange1, :ask1, :volume_24h1, :exchange2, :bid2, :volume_24h2, :gain
