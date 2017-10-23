@@ -20,4 +20,12 @@ class CryptoPair
     @bid > 0.00000001 && @ask > 0.00000001
   end
 
+  # def eql?(other)
+  #   @name == other.name && 
+  #   @bid == other.bid &&
+  #   @ask == other.ask &&
+  #   @volume_24h = other.volume_24h
+  #   @exchange = other.exchange
+  # end
+
 end
