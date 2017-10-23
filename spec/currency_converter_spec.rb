@@ -12,4 +12,11 @@ RSpec.describe CurrencyConverter do
       expect(CurrencyConverter.ETHUSD).to eq(293.401)
     end
   end
+
+  context "#eth_to_usd" do
+    it do
+      expect(CurrencyConverter.btc_to_eth(1)).to eq(20.158247586068214)
+      expect(CurrencyConverter.eth_to_btc(1)).to eq(0.04960748674855651)
+    end
+  end
 end
