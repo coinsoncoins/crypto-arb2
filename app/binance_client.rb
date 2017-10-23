@@ -17,18 +17,11 @@ class BinanceClient
 
   def parse_snapshot(snapshot)
     snapshot.each do |tradeable|
-      parsed_name = parse_base(tradeable["symbol"])
-      name = "#{parsed_name[0]}-#{parsed_name[1]}"
+      name = CryptoPair.parse_base(tradeable["symbol"]).join('-')
       crypto = CryptoPair.new(name: name, bid: tradeable["bidPrice"], ask: tradeable["askPrice"], volume_24h: nil)
       @exchange.add_crypto(crypto)
     end
     @exchange
-  end
-
-  def parse_base(name)
-    base = /BTC$|ETC$|LTC$/.match(name).to_s
-    crypto = name.sub(base, '')
-    [crypto, base]
   end
 
 end

@@ -28,4 +28,10 @@ class CryptoPair
   #   @exchange = other.exchange
   # end
 
+  def self.parse_base(name)
+    base = /BTC$|ETC$|LTC$/.match(name).to_s
+    crypto = name.sub(base, '')
+    [crypto, base]
+  end
+
 end
