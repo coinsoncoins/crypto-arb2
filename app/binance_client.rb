@@ -6,7 +6,7 @@ require './app/exchange'
 class BinanceClient
   attr_accessor :url, :exchange
   def initialize()
-    @exchange = Exchange.new('binance')
+    @exchange = Exchange.new('binance', self)
     @url = "https://www.binance.com/api/v1/ticker/allBookTickers"
   end
 

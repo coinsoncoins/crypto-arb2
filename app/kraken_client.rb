@@ -6,7 +6,7 @@ require './app/exchange'
 class KrakenClient
   attr_accessor :url, :exchange, :trade_pairs_url
   def initialize()
-    @exchange = Exchange.new('kraken')
+    @exchange = Exchange.new('kraken', self)
     @url = "https://api.kraken.com/0/public/Ticker?pair="
     @trade_pairs_url = "https://api.kraken.com/0/public/AssetPairs"
   end

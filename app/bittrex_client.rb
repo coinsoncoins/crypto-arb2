@@ -7,7 +7,7 @@ require './app/order_book'
 class BittrexClient
   attr_accessor :url, :exchange, :order_book_url
   def initialize()
-    @exchange = Exchange.new('bittrex')
+    @exchange = Exchange.new('bittrex', self)
     @url = "https://bittrex.com/api/v1.1/public/getmarketsummaries"
     # example "https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-NAV&type=both"
     @order_book_url = "https://bittrex.com/api/v1.1/public/getorderbook?market=%stype=both"

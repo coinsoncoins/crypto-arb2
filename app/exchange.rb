@@ -1,10 +1,11 @@
 require './app/crypto_pair'
 
 class Exchange
-  attr_reader :name, :crypto_pairs
-  def initialize(name)
+  attr_reader :name, :crypto_pairs, :client
+  def initialize(name, client)
     @name = name
     @crypto_pairs = []
+    @client = client
   end
 
   def add_crypto_pair(crypto_pair)

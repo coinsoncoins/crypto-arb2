@@ -5,7 +5,7 @@ require './app/exchange'
 RSpec.describe Exchange do
   context "#has_crypto_pair?" do
     it do
-      exchange = Exchange.new('bittrex')
+      exchange = Exchange.new('bittrex', nil)
       crypto1 = CryptoPair.new(name: 'ZENBTC', bid: 0.00004186, ask: 0.00004188, volume_24h: 33.70546702)
       crypto2 = CryptoPair.new(name: 'VTCBTC', bid: 0.00004186, ask: 0.00004188, volume_24h: 33.70546702)
       exchange.add_crypto_pair(crypto1)

@@ -7,7 +7,7 @@ require './app/currency_converter'
 class LivecoinClient
   attr_accessor :url, :exchange
   def initialize()
-    @exchange = Exchange.new('livecoin')
+    @exchange = Exchange.new('livecoin', self)
     @url = "https://api.livecoin.net/exchange/ticker"
   end
 

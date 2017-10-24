@@ -6,7 +6,7 @@ require './app/exchange'
 class HitBtcClient
   attr_accessor :url, :exchange, :order_book_url
   def initialize()
-    @exchange = Exchange.new('hitbtc')
+    @exchange = Exchange.new('hitbtc', self)
     @url = "https://api.hitbtc.com/api/1/public/ticker"
     @order_book_url = "https://api.hitbtc.com/api/1/public/%s/orderbook"
   end

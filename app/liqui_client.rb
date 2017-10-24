@@ -6,7 +6,7 @@ require './app/exchange'
 class LiquiClient
   attr_accessor :url, :exchange, :trade_pairs_url
   def initialize()
-    @exchange = Exchange.new('liqui')
+    @exchange = Exchange.new('liqui', self)
     @url = "https://api.liqui.io/api/3/ticker/"
     @trade_pairs_url = "https://api.liqui.io/api/3/info"
   end

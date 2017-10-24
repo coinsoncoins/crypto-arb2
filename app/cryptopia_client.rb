@@ -6,7 +6,7 @@ require './app/exchange'
 class CryptopiaClient
   attr_accessor :url, :exchange
   def initialize()
-    @exchange = Exchange.new('cryptopia')
+    @exchange = Exchange.new('cryptopia', self)
     @url = "https://www.cryptopia.co.nz/api/GetMarkets"
   end
 

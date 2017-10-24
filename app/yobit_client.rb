@@ -6,7 +6,7 @@
 # class YobitClient
 #   attr_accessor :url, :exchange, :trade_pairs_url
 #   def initialize()
-#     @exchange = Exchange.new('yobit')
+#     @exchange = Exchange.new('yobit', self)
 #     @url = "https://api.yobit.io/api/3/ticker/"
 #     @trade_pairs_url = "https://yobit.net/api/3/info"
 #   end

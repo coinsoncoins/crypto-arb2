@@ -4,7 +4,7 @@ require './app/arb_opp'
 class ArbFinder
   attr_reader :arb_opps
 
-  ARB_THRESHOLD_PERCENT = 5
+  ARB_THRESHOLD_PERCENT = 1
 
   def initialize(exchange1, exchange2)
     @arb_opps = []

@@ -7,7 +7,7 @@ require './app/exchange'
 class PoloniexClient
   attr_accessor :url, :exchange
   def initialize()
-    @exchange = Exchange.new('poloniex')
+    @exchange = Exchange.new('poloniex', self)
     @url = "https://poloniex.com/public?command=returnTicker"
   end
 
