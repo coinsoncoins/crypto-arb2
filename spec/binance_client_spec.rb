@@ -17,4 +17,24 @@ RSpec.describe BinanceClient do
       end
     end
   end
+
+  context "#get_order_book" do
+    it do
+      binance_client = BinanceClient.new
+      fixture = open("./spec/fixtures/binance_order_book.json").read;
+      url_to_stub = binance_client.order_book_url.split('/')[2]
+      stub_request(:any, Regexp.new(url_to_stub)).to_return(body: fixture)
+      crypto_pair = CryptoPair.new(name: 'SUB-BTC')
+      order_book = binance_client.get_order_book(crypto_pair)
+      expect(order_book.bids.first.price).to eq(0.00002660)
+      expect(order_book.bids.first.quantity).to eq(30847.00000000)
+      expect(order_book.bids[1].price).to eq(0.00002624)
+      expect(order_book.bids[1].quantity).to eq(2526.00000000)
+
+      expect(order_book.asks.first.price).to eq(0.00002701)
+      expect(order_book.asks.first.quantity).to eq(6664.00000000)
+      expect(order_book.asks[1].price).to eq(0.00002702)
+      expect(order_book.asks[1].quantity).to eq(423.00000000)
+    end
+  end
 end

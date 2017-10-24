@@ -19,7 +19,7 @@ def main()
   bittrex_exchange = BittrexClient.new.get_exchange()
   hitbtc_exchange = HitBtcClient.new.get_exchange()
   cryptopia_exchange = CryptopiaClient.new.get_exchange()
-  #binance_exchange = BinanceClient.new.get_exchange()
+  binance_exchange = BinanceClient.new.get_exchange()
   liqui_exchange = LiquiClient.new.get_exchange()
   poloniex_exchange = PoloniexClient.new.get_exchange()
   #kraken_exchange = KrakenClient.new.get_exchange()
@@ -27,9 +27,9 @@ def main()
 
   puts 'finding arb opps'
   arb_opps = []
-  exchanges = [bittrex_exchange, hitbtc_exchange, liqui_exchange, cryptopia_exchange, poloniex_exchange]
-  #, cryptopia_exchange, binance_exchange, liqui_exchange, 
-  #  poloniex_exchange, kraken_exchange, livecoin_exchange]
+  exchanges = [bittrex_exchange, hitbtc_exchange, liqui_exchange, cryptopia_exchange, 
+    poloniex_exchange, binance_exchange]
+    
   exchanges.each do |exchange1|
     exchanges.each do |exchange2|
       next if exchange1 == exchange2
