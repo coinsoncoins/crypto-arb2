@@ -3,6 +3,7 @@ require 'open-uri'
 require 'json'
 require './app/exchange'
 require './app/order_book'
+require 'pry'
 
 class BittrexClient
   attr_accessor :url, :exchange, :order_book_url
@@ -10,7 +11,7 @@ class BittrexClient
     @exchange = Exchange.new('bittrex', self)
     @url = "https://bittrex.com/api/v1.1/public/getmarketsummaries"
     # example "https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-NAV&type=both"
-    @order_book_url = "https://bittrex.com/api/v1.1/public/getorderbook?market=%stype=both"
+    @order_book_url = "https://bittrex.com/api/v1.1/public/getorderbook?market=%s&type=both"
   end
 
   def get_exchange()

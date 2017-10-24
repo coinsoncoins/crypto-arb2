@@ -17,7 +17,7 @@ RSpec.describe ArbOpp do
       crypto_pair2 = CryptoPair.new(name: 'BNT-BTC', exchange: hitbtc_client.exchange)
 
       arb_opp = ArbOpp.new(crypto_pair1, crypto_pair2)
-      expect(arb_opp.calc_potential_profit).to eq(0.00002464)
+      expect(arb_opp.calc_potential_profit).to be_within(0.0000001).of(0.00002464)
     end
   end
 end
