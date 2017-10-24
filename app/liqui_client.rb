@@ -38,7 +38,6 @@ class LiquiClient
       raise RuntimeError.new("LiquiClient Error: #{entries['error']}")
     end
     entries = entries[entries.keys.first]
-    binding.pry
     bids = entries["bids"]
     asks = entries["asks"]
     order_book = OrderBook.new
@@ -52,7 +51,7 @@ class LiquiClient
   end
 
   def crypto_pair_name_on_service(crypto_pair)
-    crypto_pair.name.sub('-', '_')
+    crypto_pair.name.sub('-', '_').downcase
   end
 
 end
