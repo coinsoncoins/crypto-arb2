@@ -25,4 +25,8 @@ class CurrencyConverter
     amount * (@ETHUSD) / (@BTCUSD)
   end
 
+  def self.btc_to_usd(amount)
+    amount * (@BTCUSD)
+  end
+
 end

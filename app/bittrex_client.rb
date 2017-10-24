@@ -30,7 +30,7 @@ class BittrexClient
   end
 
   def get_order_book(crypto_pair)
-    source = open(@order_book_url % crypto_pair.name).read
+    source = open(@order_book_url % crypto_pair_name_on_service(crypto_pair)).read
     entries = JSON.parse(source)["result"]
     bids = entries["buy"]
     asks = entries["sell"]
@@ -42,5 +42,9 @@ class BittrexClient
       order_book.add_entry(quantity: ask["Quantity"], price: ask["Rate"], side: 'ask')
     end
     order_book.finish_adding_entries()
+  end
+
+  def crypto_pair_name_on_service(crypto_pair)
+    crypto_pair.name.split('-').reverse.join('-')
   end
 end

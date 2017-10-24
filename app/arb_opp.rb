@@ -2,7 +2,8 @@
 require './app/crypto_pair'
 
 class ArbOpp
-  attr_reader :crypto_pair1, :crypto_pair2, :exchange1, :ask1, :volume_24h1, :exchange2, :bid2, :volume_24h2, :gain
+  attr_reader :crypto_pair1, :crypto_pair2, :exchange1, :ask1, :volume_24h1, :exchange2, :bid2, :volume_24h2,
+    :gain, :potential_profit
 
   def initialize(crypto_pair1, crypto_pair2)
     @crypto_pair1 = crypto_pair1
@@ -16,8 +17,10 @@ class ArbOpp
     @gain = (@bid2 - @ask1) / (@ask1)
   end
 
-  def get_potential_profit
-
+  def calc_potential_profit
+    book1 = @crypto_pair1.exchange.client.get_order_book(@crypto_pair1)
+    book2 = @crypto_pair2.exchange.client.get_order_book(@crypto_pair2)
+    @potential_profit = book1.arb_order_books(book2)
   end
 
   def gain_percent

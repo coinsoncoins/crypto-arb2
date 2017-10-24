@@ -28,7 +28,7 @@ class HitBtcClient
   end
 
   def get_order_book(crypto_pair)
-    source = open(@order_book_url % crypto_pair.name.sub('-', '')).read
+    source = open(@order_book_url % crypto_pair_name_on_service(crypto_pair)).read
     entries = JSON.parse(source)
     bids = entries["bids"]
     asks = entries["asks"]
@@ -40,6 +40,10 @@ class HitBtcClient
       order_book.add_entry(quantity: ask[1], price: ask[0], side: 'ask')
     end
     order_book.finish_adding_entries()
+  end
+
+  def crypto_pair_name_on_service(crypto_pair)
+    crypto_pair.name.sub('-', '')
   end
 
 end

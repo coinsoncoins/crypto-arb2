@@ -19,6 +19,7 @@ class ArbFinder
         crypto2 = @exchange2.get_crypto_pair_like(crypto1)
         arb_opp = ArbOpp.new(crypto1, crypto2)
         if arb_opp.gain_percent > ARB_THRESHOLD_PERCENT && arb_opp.valid?
+          arb_opp.calc_potential_profit
           @arb_opps.push(arb_opp)
         end
       end
