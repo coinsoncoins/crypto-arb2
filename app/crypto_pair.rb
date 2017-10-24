@@ -28,4 +28,8 @@ class CryptoPair
     [crypto, base]
   end
 
+  def get_order_book
+    @order_book ||= exchange.client.get_order_book(self)
+  end
+
 end
