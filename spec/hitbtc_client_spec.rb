@@ -13,7 +13,7 @@ RSpec.describe HitBtcClient do
       expect(exchange.name).to eq('hitbtc')
       expected_crypto = CryptoPair.new(name: 'BCN-BTC', bid: 0.0000002501, ask: 0.0000002504, volume_24h: 206.80351967)
       %i[name bid ask volume_24h].each do |value|
-        expect(exchange.cryptos[0].send(value)).to eq(expected_crypto.send(value))
+        expect(exchange.crypto_pairs[0].send(value)).to eq(expected_crypto.send(value))
       end
     end
   end

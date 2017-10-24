@@ -13,7 +13,7 @@ RSpec.describe CryptopiaClient do
       expect(exchange.name).to eq('cryptopia')
       expected_crypto = CryptoPair.new(name: '$$$-BTC', bid: 0.00000019, ask: 0.00000021, volume_24h: 0.07167655)
       %i[name bid ask volume_24h].each do |value|
-        expect(exchange.cryptos[0].send(value)).to eq(expected_crypto.send(value))
+        expect(exchange.crypto_pairs[0].send(value)).to eq(expected_crypto.send(value))
       end
     end
   end

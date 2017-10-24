@@ -14,7 +14,7 @@ RSpec.describe BittrexClient do
       expect(exchange.name).to eq('bittrex')
       expected_crypto = CryptoPair.new(name: '1ST-BTC', bid: 0.00004186, ask: 0.00004188, volume_24h: 33.70546702)
       %i[name bid ask volume_24h].each do |value|
-        expect(exchange.cryptos[0].send(value)).to eq(expected_crypto.send(value))
+        expect(exchange.crypto_pairs[0].send(value)).to eq(expected_crypto.send(value))
       end
     end
   end

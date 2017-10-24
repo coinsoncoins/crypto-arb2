@@ -17,7 +17,7 @@ RSpec.describe LiquiClient do
       expect(exchange.name).to eq('liqui')
       expected_crypto = CryptoPair.new(name: 'LTC-BTC', bid: 0.0097081, ask: 0.00973799, volume_24h: 49.682074394008394)
       %i[name bid ask volume_24h].each do |value|
-        expect(exchange.cryptos[0].send(value)).to eq(expected_crypto.send(value))
+        expect(exchange.crypto_pairs[0].send(value)).to eq(expected_crypto.send(value))
       end
     end
   end
