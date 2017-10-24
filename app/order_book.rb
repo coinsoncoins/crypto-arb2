@@ -57,8 +57,31 @@ class OrderBook
     cost
   end
 
+  def arb_order_books(other_book)
+    self.verify_ordered()
+    other_book.verify_ordered()
+    total_profit = 0.0
+    book1, book2 = self.deep_clone, other_book.deep_clone
+    while true
+      lowest_ask = book1.asks.first
+      highest_bid = book2.bids.first
+      break if !lowest_ask or !highest_bid
+      min_quantity = [lowest_ask.quantity, highest_bid.quantity].min
+      # execute the sale
+      lowest_ask.quantity -= min_quantity
+      highest_bid.quantity -= min_quantity
+      profit = min_quantity * (highest_bid.price - lowest_ask.price)
+      break if profit <= 0
+      book1.asks.shift if lowest_ask.quantity <= 0.0001
+      book2.bids.shift if highest_bid.quantity <= 0.0001
+      total_profit += profit
+    end
+    total_profit
+  end
+
   def deep_clone()
     Marshal.load( Marshal.dump(self) )
   end
+
 
 end

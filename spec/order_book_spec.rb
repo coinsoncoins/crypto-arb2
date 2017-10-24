@@ -38,6 +38,41 @@ RSpec.describe OrderBook do
     end
   end
 
+  context "#arb_order_books" do
+    it "simple case" do
+      book1, book2 = OrderBook.new, OrderBook.new
+      book1.add_entry(quantity: 100, price: 1, side: 'ask')
+      book1.add_entry(quantity: 100, price: 2, side: 'ask')
+      book1.add_entry(quantity: 100, price: 3, side: 'ask')
+      book1.add_entry(quantity: 100, price: 4, side: 'ask')
+      book1.add_entry(quantity: 100, price: 5, side: 'ask')
+      book1.finish_adding_entries
+      book2.add_entry(quantity: 100, price: 5, side: 'bid')
+      book2.add_entry(quantity: 100, price: 4, side: 'bid')
+      book2.add_entry(quantity: 100, price: 3, side: 'bid')
+      book2.add_entry(quantity: 100, price: 2, side: 'bid')
+      book2.add_entry(quantity: 100, price: 1, side: 'bid')
+      book2.finish_adding_entries
+      expect(book1.arb_order_books(book2)).to eq(600)
+    end
+
+    it "more complex case" do
+      book1, book2 = OrderBook.new, OrderBook.new
+      book1.add_entry(quantity: 100, price: 1, side: 'ask')
+      book1.add_entry(quantity: 30.5, price: 1.5, side: 'ask')
+      book1.add_entry(quantity: 73, price: 2, side: 'ask')
+      book1.add_entry(quantity: 90, price: 2.5, side: 'ask')
+      book1.add_entry(quantity: 10, price: 3, side: 'ask')
+      book1.finish_adding_entries
+      book2.add_entry(quantity: 10, price: 3, side: 'bid')
+      book2.add_entry(quantity: 40.8, price: 2.7, side: 'bid')
+      book2.add_entry(quantity: 130, price: 2.2, side: 'bid')
+      book2.add_entry(quantity: 70, price: 2, side: 'bid')
+      book2.add_entry(quantity: 33, price: 1.5, side: 'bid')
+      book2.finish_adding_entries
+      expect(book1.arb_order_books(book2)).to eq(179.81)
+    end
+  end
 
   context "#deep_clone" do
     it do
