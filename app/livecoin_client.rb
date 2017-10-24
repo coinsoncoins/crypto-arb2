@@ -21,7 +21,7 @@ class LivecoinClient
       name = tradeable["symbol"].gsub("/", '-')
       volume = tradeable["volume"].to_f * tradeable["last"].to_f # volume in bitcoin
       crypto = CryptoPair.new(name: name, bid: tradeable["best_bid"], ask: tradeable["best_ask"], volume_24h: volume)
-      @exchange.add_crypto(crypto)
+      @exchange.add_crypto_pair(crypto)
     end
     @exchange
   end

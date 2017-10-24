@@ -21,7 +21,7 @@ class HitBtcClient
     snapshot.each do |key, value|
       name = CryptoPair.parse_base(key).join('-')
       crypto = CryptoPair.new(name: name, bid: value["bid"], ask: value["ask"], volume_24h: value["volume_quote"])
-      @exchange.add_crypto(crypto)
+      @exchange.add_crypto_pair(crypto)
     end
     @exchange
   end

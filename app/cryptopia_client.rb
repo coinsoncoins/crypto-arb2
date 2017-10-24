@@ -21,7 +21,7 @@ class CryptopiaClient
     snapshot.each do |tradeable|
       name = tradeable["Label"].split("/").join('-')
       crypto = CryptoPair.new(name: name, bid: tradeable["BidPrice"], ask: tradeable["AskPrice"], volume_24h: tradeable["BaseVolume"])
-      @exchange.add_crypto(crypto)
+      @exchange.add_crypto_pair(crypto)
     end
     @exchange
   end

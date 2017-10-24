@@ -22,7 +22,7 @@ class PoloniexClient
     snapshot.each do |key, value|
       name = key.split('_').reverse.join('-') # BTC_BCN
       crypto = CryptoPair.new(name: name, bid: value["highestBid"], ask: value["lowestAsk"], volume_24h: value["baseVolume"])
-      @exchange.add_crypto(crypto)
+      @exchange.add_crypto_pair(crypto)
     end
     @exchange
   end

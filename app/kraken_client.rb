@@ -28,7 +28,7 @@ class KrakenClient
       name = altnames[key]["altname"].gsub('XBT', 'BTC')
       name = CryptoPair.parse_base(name).join('-')
       crypto = CryptoPair.new(name: name, bid: value["b"][0], ask: value["a"][0], volume_24h: value["v"][1])
-      @exchange.add_crypto(crypto)
+      @exchange.add_crypto_pair(crypto)
     end
     @exchange
   end

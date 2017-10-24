@@ -15,8 +15,8 @@ class ArbFinder
 
   def compare
     @exchange1.cryptos.each do |crypto1|
-      if @exchange2.has_crypto?(crypto1)
-        crypto2 = @exchange2.get_crypto_like(crypto1)
+      if @exchange2.has_crypto_pair?(crypto1)
+        crypto2 = @exchange2.get_crypto_pair_like(crypto1)
         arb_opp = ArbOpp.new(crypto1, crypto2)
         if arb_opp.gain_percent > ARB_THRESHOLD_PERCENT && arb_opp.valid?
           @arb_opps.push(arb_opp)

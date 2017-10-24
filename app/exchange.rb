@@ -7,7 +7,7 @@ class Exchange
     @cryptos = []
   end
 
-  def add_crypto(crypto)
+  def add_crypto_pair(crypto)
     crypto.exchange = self
     @cryptos.push(crypto)
 
@@ -23,12 +23,12 @@ class Exchange
     # end
   end
 
-  def get_crypto_like(crypto)
-    @cryptos.detect { |c| c.name == crypto.name }
+  def get_crypto_pair_like(crypto_pair)
+    @cryptos.detect { |c| c.name == crypto_pair.name }
   end
 
-  def has_crypto?(crypto)
-    !get_crypto_like(crypto).nil?
+  def has_crypto_pair?(crypto_pair)
+    !get_crypto_pair_like(crypto_pair).nil?
   end
 
 end

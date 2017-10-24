@@ -19,7 +19,7 @@ class BinanceClient
     snapshot.each do |tradeable|
       name = CryptoPair.parse_base(tradeable["symbol"]).join('-')
       crypto = CryptoPair.new(name: name, bid: tradeable["bidPrice"], ask: tradeable["askPrice"], volume_24h: nil)
-      @exchange.add_crypto(crypto)
+      @exchange.add_crypto_pair(crypto)
     end
     @exchange
   end
