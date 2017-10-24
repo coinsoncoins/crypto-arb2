@@ -15,6 +15,8 @@ class CurrencyConverter
     source = JSON.parse(open(@api_url).read)
     @BTCUSD = source.detect{|c| c["id"] == "bitcoin"}["price_usd"].to_f
     @ETHUSD = source.detect{|c| c["id"] == "ethereum"}["price_usd"].to_f
+    puts "BTCUSD: #{@BTCUSD}"
+    puts "ETHUSD: #{@ETHUSD}"
   end
 
   def self.btc_to_eth(amount)
