@@ -36,7 +36,18 @@ RSpec.describe OrderBook do
       cost = order_book.get_cost_of_side('ask', 0.00023)
       expect(cost).to eq(5.300000000000001)
     end
+  end
 
+
+  context "#deep_clone" do
+    it do
+      order_book = OrderBook.new
+      order_book.add_entry(quantity: 100, price: 1, side: 'bid')
+      order_book2 = order_book.deep_clone
+      order_book2.bids.first.price = 2
+      expect(order_book.bids.first.price).to eq(1)
+      expect(order_book2.bids.first.price).to eq(2)
+    end
   end
 
 end
