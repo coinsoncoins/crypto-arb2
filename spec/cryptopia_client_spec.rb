@@ -3,6 +3,12 @@ require './app/cryptopia_client'
 
 
 RSpec.describe CryptopiaClient do
+  context "coin map" do
+    it do
+      
+    end
+  end
+
   context "#get_exchange" do
     it "returns the exchange data" do
       cryptopia_client = CryptopiaClient.new

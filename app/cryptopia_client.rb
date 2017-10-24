@@ -10,6 +10,8 @@ class CryptopiaClient
     @exchange = Exchange.new('cryptopia', self)
     @url = "https://www.cryptopia.co.nz/api/GetMarkets"
     @order_book_url = "https://www.cryptopia.co.nz/api/GetMarketOrders/%s"
+    @coin_map = JSON.parse(open('./app/data/cryptopia_coin_map.json').read)
+    @coin_map_inverted = @coin_map.invert
   end
 
   def get_exchange()
@@ -22,6 +24,7 @@ class CryptopiaClient
   def parse_snapshot(snapshot)
     snapshot.each do |tradeable|
       name = tradeable["Label"].split("/").join('-')
+      name = @coin_map[name] if @coin_map[name] 
       crypto = CryptoPair.new(name: name, bid: tradeable["BidPrice"], ask: tradeable["AskPrice"], volume_24h: tradeable["BaseVolume"])
       @exchange.add_crypto_pair(crypto)
     end
@@ -44,7 +47,9 @@ class CryptopiaClient
   end
 
   def crypto_pair_name_on_service(crypto_pair)
-    crypto_pair.name.sub('-', '_')
+    name = crypto_pair.name
+    name = @coin_map_inverted[name] if @coin_map_inverted[name]
+    name = crypto_pair.name.sub('-', '_')
   end
 
 end

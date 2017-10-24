@@ -18,16 +18,16 @@ def main()
   
   bittrex_exchange = BittrexClient.new.get_exchange()
   hitbtc_exchange = HitBtcClient.new.get_exchange()
-  #cryptopia_exchange = CryptopiaClient.new.get_exchange()
+  cryptopia_exchange = CryptopiaClient.new.get_exchange()
   #binance_exchange = BinanceClient.new.get_exchange()
   liqui_exchange = LiquiClient.new.get_exchange()
-  #poloniex_exchange = PoloniexClient.new.get_exchange()
+  poloniex_exchange = PoloniexClient.new.get_exchange()
   #kraken_exchange = KrakenClient.new.get_exchange()
   #livecoin_exchange = LivecoinClient.new.get_exchange()
 
   puts 'finding arb opps'
   arb_opps = []
-  exchanges = [bittrex_exchange, hitbtc_exchange, liqui_exchange]
+  exchanges = [bittrex_exchange, hitbtc_exchange, liqui_exchange, cryptopia_exchange, poloniex_exchange]
   #, cryptopia_exchange, binance_exchange, liqui_exchange, 
   #  poloniex_exchange, kraken_exchange, livecoin_exchange]
   exchanges.each do |exchange1|
@@ -37,6 +37,7 @@ def main()
     end
   end
 
+  arb_opps = arb_opps.sort_by { |opp| opp.potential_profit }.reverse
   arb_opps.each do |arp_opp|
     puts MessageFormatter.arb_opp(arp_opp)
   end
