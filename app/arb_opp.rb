@@ -18,9 +18,14 @@ class ArbOpp
   end
 
   def calc_potential_profit
-    book1 = @crypto_pair1.exchange.client.get_order_book(@crypto_pair1)
-    book2 = @crypto_pair2.exchange.client.get_order_book(@crypto_pair2)
-    @potential_profit = book1.arb_order_books(book2)
+    begin
+      book1 = @crypto_pair1.exchange.client.get_order_book(@crypto_pair1)
+      book2 = @crypto_pair2.exchange.client.get_order_book(@crypto_pair2)
+      @potential_profit = book1.arb_order_books(book2)
+    rescue RuntimeError => e
+      @potential_profit = 0.0
+      puts e
+    end
   end
 
   def gain_percent
