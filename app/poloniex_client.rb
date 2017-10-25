@@ -11,6 +11,7 @@ class PoloniexClient
     @exchange = Exchange.new('poloniex', self)
     @url = "https://poloniex.com/public?command=returnTicker"
     @order_book_url = "https://poloniex.com/public?command=returnOrderBook&currencyPair=%s"
+    @coin_name_remapper = CoinNameRemapper.new('poloniex')
   end
 
   def get_exchange()
@@ -23,6 +24,7 @@ class PoloniexClient
   def parse_snapshot(snapshot)
     snapshot.each do |key, value|
       name = key.split('_').reverse.join('-') # BTC_BCN
+      name = @coin_name_remapper.map(name)
       crypto = CryptoPair.new(name: name, bid: value["highestBid"], ask: value["lowestAsk"], volume_24h: value["baseVolume"])
       @exchange.add_crypto_pair(crypto)
     end
@@ -45,6 +47,7 @@ class PoloniexClient
   end
 
   def crypto_pair_name_on_service(crypto_pair)
+    name = @coin_name_remapper.unmap(crypto_pair.name)
     crypto_pair.name.split('-').reverse.join('_')
   end
 
