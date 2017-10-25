@@ -9,7 +9,7 @@ class KucoinClient
   def initialize()
     @exchange = Exchange.new('kucoin', self)
     @url = "https://api.kucoin.com/v1/market/open/symbols"
-    #@order_book_url = "https://bittrex.com/api/v1.1/public/getorderbook?market=%s&type=both"
+    @order_book_url = "https://api.kucoin.com/v1/open/orders?symbol=%s"
   end
 
   def get_exchange()
@@ -28,20 +28,20 @@ class KucoinClient
     @exchange
   end
 
-  # def get_order_book(crypto_pair)
-  #   source = open(@order_book_url % crypto_pair_name_on_service(crypto_pair)).read
-  #   entries = JSON.parse(source)["result"]
-  #   bids = entries["buy"]
-  #   asks = entries["sell"]
-  #   order_book = OrderBook.new
-  #   bids.each do |bid|
-  #     order_book.add_entry(quantity: bid["Quantity"], price: bid["Rate"], side: 'bid')
-  #   end
-  #   asks.each do |ask|
-  #     order_book.add_entry(quantity: ask["Quantity"], price: ask["Rate"], side: 'ask')
-  #   end
-  #   order_book.finish_adding_entries()
-  # end
+  def get_order_book(crypto_pair)
+    source = open(@order_book_url % crypto_pair_name_on_service(crypto_pair)).read
+    entries = JSON.parse(source)["data"]
+    bids = entries["BUY"]
+    asks = entries["SELL"]
+    order_book = OrderBook.new
+    bids.each do |bid|
+      order_book.add_entry(quantity: bid[1], price: bid[0], side: 'bid')
+    end
+    asks.each do |ask|
+      order_book.add_entry(quantity: ask[1], price: ask[0], side: 'ask')
+    end
+    order_book.finish_adding_entries()
+  end
 
   def crypto_pair_name_on_service(crypto_pair)
     crypto_pair.name.split('-').reverse.join('-')
