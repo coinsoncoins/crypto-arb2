@@ -1,3 +1,4 @@
 {
-  "FCN-BTC": "facilecoin-FCN-BTC"
+  "FCN": "facilecoin_FCN",
+  "NET": "netcoin_NET" 
 }
