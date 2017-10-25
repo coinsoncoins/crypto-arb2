@@ -4,6 +4,7 @@ require 'open-uri'
 require 'json'
 require './app/exchange'
 require './app/order_book'
+require './app/coin_name_remapper'
 
 class PoloniexClient
   attr_accessor :url, :exchange, :order_book_url

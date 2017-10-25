@@ -60,7 +60,7 @@ class OrderBook
   def arb_order_books(other_book)
     self.verify_ordered()
     other_book.verify_ordered()
-    total_profit = 0.0
+    total_profit, amount_to_arb = 0.0, 0
     book1, book2 = self.deep_clone, other_book.deep_clone
     while true
       lowest_ask = book1.asks.first
@@ -75,8 +75,9 @@ class OrderBook
       book1.asks.shift if lowest_ask.quantity <= 0.0001
       book2.bids.shift if highest_bid.quantity <= 0.0001
       total_profit += profit
+      amount_to_arb += min_quantity
     end
-    total_profit
+    {total_profit: total_profit, amount_to_arb: amount_to_arb}
   end
 
   def deep_clone()
