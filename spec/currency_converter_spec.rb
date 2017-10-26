@@ -1,22 +1,25 @@
-
+require './app/coinmarketcap_client'
 require './app/currency_converter'
 
 
 RSpec.describe CurrencyConverter do
-  context "#get_quotes" do
+  before do
+    fixture = open("./spec/fixtures/coinmarketcap_tickers.json").read;
+    stub_request(:any, CoinMarketCapClient.url).to_return(body: fixture)
+  end
+  context "methods" do
     it do
-      fixture = open("./spec/fixtures/coinmarketcap_tickers.json").read;
-      stub_request(:any, CurrencyConverter.api_url).to_return(body: fixture)
-      CurrencyConverter.get_quotes()
-      expect(CurrencyConverter.BTCUSD).to eq(5914.45)
-      expect(CurrencyConverter.ETHUSD).to eq(293.401)
+      expect(CurrencyConverter.BTCUSD).to eq(6000)
+      expect(CurrencyConverter.ETHUSD).to eq(300)
     end
   end
 
-  context "#eth_to_usd" do
+  context "convert" do
     it do
-      expect(CurrencyConverter.btc_to_eth(1)).to eq(20.158247586068214)
-      expect(CurrencyConverter.eth_to_btc(1)).to eq(0.04960748674855651)
+      expect(CurrencyConverter.btc_to_eth(1)).to eq(20)
+      expect(CurrencyConverter.eth_to_btc(1)).to eq(0.05)
+      expect(CurrencyConverter.btc_to_usd(1)).to eq(6000)
+      expect(CurrencyConverter.eth_to_usd(1)).to eq(300)
     end
   end
 end
