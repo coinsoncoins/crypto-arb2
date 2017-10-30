@@ -29,7 +29,7 @@ class KucoinClient
   end
 
   def get_order_book(crypto_pair)
-    source = open(@order_book_url % crypto_pair_name_on_service(crypto_pair)).read
+    source = open(@order_book_url % crypto_pair.name).read
     entries = JSON.parse(source)["data"]
     bids = entries["BUY"]
     asks = entries["SELL"]
@@ -43,7 +43,4 @@ class KucoinClient
     order_book.finish_adding_entries()
   end
 
-  def crypto_pair_name_on_service(crypto_pair)
-    crypto_pair.name.split('-').reverse.join('-')
-  end
 end

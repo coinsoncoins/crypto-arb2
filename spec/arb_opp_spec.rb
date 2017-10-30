@@ -5,6 +5,10 @@ require './app/bittrex_client'
 
 RSpec.describe ArbOpp do
   context "#calc_potential_profit" do
+    before do
+      stub_coinmarketcap_client
+    end
+
     it do
       bittrex_client = BittrexClient.new
       hitbtc_client = HitBtcClient.new
