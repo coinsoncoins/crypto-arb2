@@ -71,13 +71,13 @@ class OrderBook
       # execute the sale
       lowest_ask.quantity -= min_quantity
       highest_bid.quantity -= min_quantity
-      profit = min_quantity * (highest_bid.price - lowest_ask.price)
+      profit = min_quantity * (highest_bid.price_usd - lowest_ask.price_usd)
       break if profit <= 0
       book1.asks.shift if lowest_ask.quantity <= 0.0001
       book2.bids.shift if highest_bid.quantity <= 0.0001
       total_profit += profit
       amount_to_arb += min_quantity
-      puts "buying #{min_quantity} at #{highest_bid.price} and selling at #{lowest_ask.price} for profit #{profit} and total profit #{total_profit}"
+      puts "buying #{min_quantity} at #{highest_bid.price_usd} and selling at #{lowest_ask.price_usd} for profit #{profit} and total profit #{total_profit}"
     end
     {total_profit: total_profit, amount_to_arb: amount_to_arb}
   end

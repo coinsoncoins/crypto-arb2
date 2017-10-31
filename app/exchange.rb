@@ -21,8 +21,12 @@ class Exchange
     !get_market_like(market).nil?
   end
 
-  def get_all_markets_for_crypto(crypto_name)
-    @markets.select { |market| market.crypto == crypto_name }
+  def get_all_markets_for_crypto(crypto_name, bases = [])
+    markets = @markets.select { |market| market.crypto == crypto_name }
+    if bases.any?
+      markets = markets.select { |market| bases.include?(market.base) }
+    end
+    markets
   end
 
 end

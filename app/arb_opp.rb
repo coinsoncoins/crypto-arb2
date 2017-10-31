@@ -11,14 +11,14 @@ class ArbOpp
   end
 
   def calc_gain
-    @gain = (@market2.bid - @market1.ask) / (@market1.ask)
+    @gain = (@market2.bid_usd - @market1.ask_usd) / (@market1.ask_usd)
   end
 
   def calc_potential_profit
     begin
       book1 = @market1.get_order_book
       book2 = @market2.get_order_book
-      result = OrderBook.arb_order_books(book1, book2)
+      result = OrderBookArber.new(book1, book2).arb
       @potential_profit = result[:total_profit]
       @amount_to_arb = result[:amount_to_arb]
     rescue RuntimeError => e

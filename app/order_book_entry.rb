@@ -8,6 +8,9 @@ class OrderBookEntry
     @price = price.to_f
     @side = side
     @order_book = order_book
-    @price_usd = CurrencyConverter.btc_to_usd(@price)
+    @price_usd = CurrencyConverter.to_usd(@price, @order_book.market.base)
+    if !@price_usd
+      raise StandardError.new("cannot convert order_book price")
+    end
   end
 end

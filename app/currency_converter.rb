@@ -30,6 +30,16 @@ class CurrencyConverter
     def eth_to_usd(amount)
       amount * self.ETHUSD
     end
+
+    def to_usd(amount, base)
+      if base == 'BTC'
+        return btc_to_usd(amount)
+      elsif base == 'ETH'
+        return eth_to_usd(amount)
+      else
+        #raise StandardError.new("unsupported base: #{base}")
+      end
+    end
   end
 
 end
