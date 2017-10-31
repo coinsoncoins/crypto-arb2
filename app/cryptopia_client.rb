@@ -36,7 +36,7 @@ class CryptopiaClient
     entries = JSON.parse(source)["Data"]
     bids = entries["Buy"]
     asks = entries["Sell"]
-    order_book = OrderBook.new
+    order_book = OrderBook.new(market)
     bids.each do |bid|
       order_book.add_entry(quantity: bid["Volume"], price: bid["Price"], side: 'bid')
     end

@@ -5,12 +5,14 @@ require './app/order_book'
 RSpec.describe OrderBook do
   context "#get_sum_of_side" do
     it "raises exception if not 'finished_adding_entries' called" do
-      order_book = OrderBook.new
+      market = Market.new(name: 'LTC-BTC')
+      order_book = OrderBook.new(market)
       order_book.add_entry(quantity: 10000, price: 0.0002, side: 'bid')
       expect{order_book.get_cost_of_side('bid')}.to raise_error(RuntimeError)
     end
     it '#get_cost_of_side on bid side' do
-      order_book = OrderBook.new
+      market = Market.new(name: 'LTC-BTC')
+      order_book = OrderBook.new(market)
       order_book.add_entry(quantity: 10000, price: 0.0002, side: 'bid')
       order_book.add_entry(quantity: 15000, price: 0.00018, side: 'bid')
       order_book.add_entry(quantity: 20000, price: 0.00015, side: 'bid')
@@ -24,7 +26,8 @@ RSpec.describe OrderBook do
     end
 
     it '#get_cost_of_side on ask side' do
-      order_book = OrderBook.new
+      market = Market.new(name: 'LTC-BTC')
+      order_book = OrderBook.new(market)
       order_book.add_entry(quantity: 10000, price: 0.0002, side: 'ask')
       order_book.add_entry(quantity: 15000, price: 0.00022, side: 'ask')
       order_book.add_entry(quantity: 20000, price: 0.00025, side: 'ask')
@@ -40,7 +43,9 @@ RSpec.describe OrderBook do
 
   context "#arb_order_books" do
     it "simple case" do
-      book1, book2 = OrderBook.new, OrderBook.new
+      market1 = Market.new(name: 'LTC-BTC')
+      market2 = Market.new(name: 'NAV-BTC')
+      book1, book2 = OrderBook.new(market1), OrderBook.new(market2)
       book1.add_entry(quantity: 100, price: 1, side: 'ask')
       book1.add_entry(quantity: 100, price: 2, side: 'ask')
       book1.add_entry(quantity: 100, price: 3, side: 'ask')
@@ -59,7 +64,9 @@ RSpec.describe OrderBook do
     end
 
     it "more complex case" do
-      book1, book2 = OrderBook.new, OrderBook.new
+      market1 = Market.new(name: 'LTC-BTC')
+      market2 = Market.new(name: 'NAV-BTC')
+      book1, book2 = OrderBook.new(market1), OrderBook.new(market2)
       book1.add_entry(quantity: 100, price: 1, side: 'ask')
       book1.add_entry(quantity: 30.5, price: 1.5, side: 'ask')
       book1.add_entry(quantity: 73, price: 2, side: 'ask')
@@ -80,7 +87,8 @@ RSpec.describe OrderBook do
 
   context "#deep_clone" do
     it do
-      order_book = OrderBook.new
+      market = Market.new(name: 'LTC-BTC')
+      order_book = OrderBook.new(market)
       order_book.add_entry(quantity: 100, price: 1, side: 'bid')
       order_book2 = order_book.deep_clone
       order_book2.bids.first.price = 2

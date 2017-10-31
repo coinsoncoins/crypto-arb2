@@ -37,7 +37,7 @@ class PoloniexClient
     entries = JSON.parse(source)
     bids = entries["bids"]
     asks = entries["asks"]
-    order_book = OrderBook.new
+    order_book = OrderBook.new(market)
     bids.each do |bid|
       order_book.add_entry(quantity: bid[1], price: bid[0], side: 'bid')
     end

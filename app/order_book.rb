@@ -2,11 +2,12 @@ require './app/order_book_entry'
 require "active_support/hash_with_indifferent_access"
 
 class OrderBook
-  attr_reader :book
+  attr_reader :book, :market
 
-  def initialize()
+  def initialize(market)
     @book = ActiveSupport::HashWithIndifferentAccess.new({bid: [], ask: []})
     @has_been_ordered = false
+    @market = market
   end
 
   def bids
@@ -20,7 +21,7 @@ class OrderBook
   def add_entry(quantity:, price:, side:)
     side = side.to_s
     verify_side(side)
-    @book[side].push(OrderBookEntry.new(quantity: quantity.to_f, price: price.to_f, side: side))
+    @book[side].push(OrderBookEntry.new(quantity: quantity.to_f, price: price.to_f, side: side, order_book: self))
     @has_been_ordered = false
     self
   end

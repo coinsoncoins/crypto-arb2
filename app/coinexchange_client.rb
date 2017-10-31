@@ -40,7 +40,7 @@ class CoinExchangeClient
     entries = JSON.parse(source)["result"]
     bids = entries["BuyOrders"]
     asks = entries["SellOrders"]
-    order_book = OrderBook.new
+    order_book = OrderBook.new(market)
     bids.each do |bid|
       order_book.add_entry(quantity: bid["Quantity"], price: bid["Price"], side: 'bid')
     end

@@ -34,7 +34,7 @@ class EtherDeltaClient
     entries = JSON.parse(source)
     bids = entries["buys"]
     asks = entries["sells"]
-    order_book = OrderBook.new
+    order_book = OrderBook.new(market)
     bids.each do |bid|
       order_book.add_entry(quantity: bid["amount"], price: bid["price"], side: 'bid')
     end

@@ -34,7 +34,7 @@ class BittrexClient
     entries = JSON.parse(source)["result"]
     bids = entries["buy"]
     asks = entries["sell"]
-    order_book = OrderBook.new
+    order_book = OrderBook.new(market)
     bids.each do |bid|
       order_book.add_entry(quantity: bid["Quantity"], price: bid["Rate"], side: 'bid')
     end
