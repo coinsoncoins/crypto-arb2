@@ -1,3 +1,13 @@
+
+class BadMarketNameError < StandardError
+  attr_reader :name
+  def initialize(message, name)
+    @name = name
+    super(message)
+  end
+end
+
+
 class Market
 
   attr_accessor :name, :bid, :ask, :exchange, :order_book, :id, :token_addr
@@ -10,6 +20,9 @@ class Market
     @exchange = exchange
     @id = id.to_i
     @token_addr = token_addr
+    if crypto.to_s.strip.empty? || base.to_s.strip.empty?
+      raise BadMarketNameError.new("Poorly formatted Market name: #{@name}", @name)
+    end
   end
 
   def valid?()
@@ -25,7 +38,10 @@ class Market
   # end
 
   def self.parse_base(name)
-    base = /BTC$|ETC$|LTC$|EUR$|USD$|USTD$/.match(name).to_s
+    base = /BTC$|ETH$|LTC$|EUR$|CAD$|GBP$|JPY$|USD$|USTD$|USDT$/.match(name).to_s
+    if base.to_s.strip.empty?
+      raise BadMarketNameError.new("Poorly formatted Market name: #{name}", name)
+    end
     crypto = name.sub(base, '')
     [crypto, base]
   end

@@ -15,7 +15,7 @@ class ArbFinder
 
   def compare
     @exchange1.markets.each do |market1|
-      
+      markets_to_compare = @exchange2.get_markets_for_crypto(market1.crypto)
 
       if @exchange2.has_market?(market1)
         market2 = @exchange2.get_market_like(market1)

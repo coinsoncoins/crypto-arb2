@@ -14,14 +14,18 @@ class BinanceClient
 
   def get_exchange()
     source = open(@url).read
-    parse_snapshot(JSON.parse(source))
+    parse_summaries(JSON.parse(source))
   end
 
-  def parse_snapshot(snapshot)
-    snapshot.each do |tradeable|
-      name = Market.parse_base(tradeable["symbol"]).join('-')
-      crypto = Market.new(name: name, bid: tradeable["bidPrice"], ask: tradeable["askPrice"], volume_24h: nil)
-      @exchange.add_market(crypto)
+  def parse_summaries(summaries)
+    summaries.each do |tradeable|
+      begin
+        name = Market.parse_base(tradeable["symbol"]).join('-')
+        market = Market.new(name: name, bid: tradeable["bidPrice"], ask: tradeable["askPrice"], volume_24h: nil)
+        @exchange.add_market(market)       
+      rescue BadMarketNameError => e
+        raise unless e.name == '123456' || e.name == 'ETC' # binance has these errors in its API, ignore
+      end
     end
     @exchange
   end
