@@ -30,6 +30,14 @@ class CryptoPair
     [crypto, base]
   end
 
+  def crypto_name
+    @name.split('-')[0]
+  end
+
+  def base
+    @name.split('-')[1]
+  end
+
   def get_order_book
     @order_book ||= exchange.client.get_order_book(self)
   end

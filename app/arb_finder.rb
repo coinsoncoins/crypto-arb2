@@ -14,12 +14,9 @@ class ArbFinder
 
 
   def compare
-    # find any arb opps on the same exchange
-    @exchange1.crypto_pairs.each do |crypto_pair|
+    @exchange1.crypto_pairs.each do |market1|
       
-    end
 
-    @exchange1.crypto_pairs.each do |crypto1|
       if @exchange2.has_crypto_pair?(crypto1)
         crypto2 = @exchange2.get_crypto_pair_like(crypto1)
         arb_opp = ArbOpp.new(crypto1, crypto2)

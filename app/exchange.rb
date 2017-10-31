@@ -21,4 +21,12 @@ class Exchange
     !get_crypto_pair_like(crypto_pair).nil?
   end
 
+  def get_crypto_like(crypto_pair)
+    @crypto_pairs.detect { |c| c.name.split('-')[0] == crypto_pair.name.split('-')[0] }
+  end
+
+  def get_markets_with_crypto_(crypto_name)
+    @crypto_pairs.select { |c| c.crypto_name == crypto_name }
+  end
+
 end
