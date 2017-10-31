@@ -8,6 +8,7 @@ require './app/poloniex_client'
 require './app/kraken_client'
 require './app/livecoin_client'
 require './app/kucoin_client'
+require './app/coinexchange_client'
 require './app/arb_finder'
 require './app/arb_opp'
 require './app/message_formatter'
@@ -24,12 +25,13 @@ def main()
   liqui_exchange = LiquiClient.new.get_exchange()
   poloniex_exchange = PoloniexClient.new.get_exchange()
   kucoin_exchange = KucoinClient.new.get_exchange()
+  coinexchange_client = CoinExchangeClient.new.get_exchange()
   #kraken_exchange = KrakenClient.new.get_exchange()
   #livecoin_exchange = LivecoinClient.new.get_exchange()
 
   puts 'finding arb opps'
   arb_opps = []
-  exchanges = [kucoin_exchange, bittrex_exchange, hitbtc_exchange, liqui_exchange, cryptopia_exchange, 
+  exchanges = [coinexchange_client, kucoin_exchange, bittrex_exchange, hitbtc_exchange, liqui_exchange, cryptopia_exchange, 
     poloniex_exchange, binance_exchange]
     
   exchanges.each do |exchange1|
