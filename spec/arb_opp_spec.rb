@@ -17,10 +17,10 @@ RSpec.describe ArbOpp do
       fixture = open("./spec/fixtures/hitbtc_order_book_bnt.json").read;
       stub_request(:any, Regexp.new(hitbtc_client.order_book_url.split('/')[2])).to_return(body: fixture)
 
-      crypto_pair1 = CryptoPair.new(name: 'BNT-BTC', exchange: bittrex_client.exchange)
-      crypto_pair2 = CryptoPair.new(name: 'BNT-BTC', exchange: hitbtc_client.exchange)
+      market1 = Market.new(name: 'BNT-BTC', exchange: bittrex_client.exchange)
+      market2 = Market.new(name: 'BNT-BTC', exchange: hitbtc_client.exchange)
 
-      arb_opp = ArbOpp.new(crypto_pair1, crypto_pair2)
+      arb_opp = ArbOpp.new(market1, market2)
       expect(arb_opp.calc_potential_profit).to be_within(0.0000001).of(0.00002464)
     end
   end

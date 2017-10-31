@@ -22,14 +22,14 @@ class KucoinClient
   def parse_snapshot(snapshot)
     snapshot.each do |tradeable|
       name = tradeable["symbol"]
-      crypto = CryptoPair.new(name: name, bid: tradeable["buy"], ask: tradeable["sell"], volume_24h: tradeable["volValue"])
-      @exchange.add_crypto_pair(crypto)
+      crypto = Market.new(name: name, bid: tradeable["buy"], ask: tradeable["sell"], volume_24h: tradeable["volValue"])
+      @exchange.add_market(crypto)
     end
     @exchange
   end
 
-  def get_order_book(crypto_pair)
-    source = open(@order_book_url % crypto_pair.name).read
+  def get_order_book(market)
+    source = open(@order_book_url % market.name).read
     entries = JSON.parse(source)["data"]
     bids = entries["BUY"]
     asks = entries["SELL"]

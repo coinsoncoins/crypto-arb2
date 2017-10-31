@@ -1,4 +1,4 @@
-class CryptoPair
+class Market
 
   attr_accessor :name, :bid, :ask, :exchange, :order_book, :id, :token_addr
   attr_accessor :volume_24h # volume is denominated in base currency
@@ -30,7 +30,7 @@ class CryptoPair
     [crypto, base]
   end
 
-  def crypto_name
+  def crypto
     @name.split('-')[0]
   end
 

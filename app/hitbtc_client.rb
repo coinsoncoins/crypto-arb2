@@ -20,15 +20,15 @@ class HitBtcClient
     # snapshot is hash with keys being the crypto-tradingpair
     # {"BCNBTC":{"ask":"0.0000002504","bid":"0.0000002501","last":"0.0000002504",...
     snapshot.each do |key, value|
-      name = CryptoPair.parse_base(key).join('-')
-      crypto = CryptoPair.new(name: name, bid: value["bid"], ask: value["ask"], volume_24h: value["volume_quote"])
-      @exchange.add_crypto_pair(crypto)
+      name = Market.parse_base(key).join('-')
+      crypto = Market.new(name: name, bid: value["bid"], ask: value["ask"], volume_24h: value["volume_quote"])
+      @exchange.add_market(crypto)
     end
     @exchange
   end
 
-  def get_order_book(crypto_pair)
-    source = open(@order_book_url % crypto_pair_name_on_service(crypto_pair)).read
+  def get_order_book(market)
+    source = open(@order_book_url % market_name_on_service(market)).read
     entries = JSON.parse(source)
     bids = entries["bids"]
     asks = entries["asks"]
@@ -42,8 +42,8 @@ class HitBtcClient
     order_book.finish_adding_entries()
   end
 
-  def crypto_pair_name_on_service(crypto_pair)
-    crypto_pair.name.sub('-', '')
+  def market_name_on_service(market)
+    market.name.sub('-', '')
   end
 
 end

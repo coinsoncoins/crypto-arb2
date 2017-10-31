@@ -11,9 +11,9 @@ RSpec.describe HitBtcClient do
 
       exchange = hitbtc_client.get_exchange()
       expect(exchange.name).to eq('hitbtc')
-      expected_crypto = CryptoPair.new(name: 'BCN-BTC', bid: 0.0000002501, ask: 0.0000002504, volume_24h: 206.80351967)
+      expected_crypto = Market.new(name: 'BCN-BTC', bid: 0.0000002501, ask: 0.0000002504, volume_24h: 206.80351967)
       %i[name bid ask volume_24h].each do |value|
-        expect(exchange.crypto_pairs[0].send(value)).to eq(expected_crypto.send(value))
+        expect(exchange.markets[0].send(value)).to eq(expected_crypto.send(value))
       end
     end
   end
@@ -24,8 +24,8 @@ RSpec.describe HitBtcClient do
       fixture = open("./spec/fixtures/hitbtc_order_book.json").read;
       url_to_stub = hitbtc_client.order_book_url.split('/')[2]
       stub_request(:any, Regexp.new(url_to_stub)).to_return(body: fixture)
-      crypto_pair = CryptoPair.new(name: 'DASH-BTC')
-      order_book = hitbtc_client.get_order_book(crypto_pair)
+      market = Market.new(name: 'DASH-BTC')
+      order_book = hitbtc_client.get_order_book(market)
       expect(order_book.bids.first.price).to eq(0.051275)
       expect(order_book.bids.first.quantity).to eq(0.007)
       expect(order_book.bids[1].price).to eq(0.051169)

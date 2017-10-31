@@ -11,10 +11,10 @@ RSpec.describe EtherDeltaClient do
       
       exchange = etherdelta_client.get_exchange()
       expect(exchange.name).to eq('etherdelta')
-      expected_crypto = CryptoPair.new(name: 'MOD-ETH', token_addr: "0x957c30ab0426e0c93cd8241e2c60392d08c6ac8e", 
+      expected_crypto = Market.new(name: 'MOD-ETH', token_addr: "0x957c30ab0426e0c93cd8241e2c60392d08c6ac8e", 
         bid: 0.00485, ask: 0.005, volume_24h: 2564.891)
       %i[name bid ask volume_24h token_addr].each do |value|
-        expect(exchange.crypto_pairs[0].send(value)).to eq(expected_crypto.send(value))
+        expect(exchange.markets[0].send(value)).to eq(expected_crypto.send(value))
       end
     end
   end
@@ -28,8 +28,8 @@ RSpec.describe EtherDeltaClient do
       fixture = open("./spec/fixtures/etherdelta_order_book.json").read
       url_to_stub = etherdelta_client.order_book_url.split('/')[2]
       stub_request(:any, Regexp.new(url_to_stub)).to_return(body: fixture)
-      crypto_pair = CryptoPair.new(name: 'MOD-ETH')
-      order_book = etherdelta_client.get_order_book(crypto_pair)
+      market = Market.new(name: 'MOD-ETH')
+      order_book = etherdelta_client.get_order_book(market)
       expect(order_book.bids.first.price).to eq(0.00485)
       expect(order_book.bids.first.quantity).to eq(60)
       expect(order_book.bids[1].price).to eq(0.00481)

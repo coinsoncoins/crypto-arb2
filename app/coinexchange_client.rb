@@ -28,15 +28,15 @@ class CoinExchangeClient
   def parse_summaries(summaries)
     summaries.each do |tradeable|
       name = tradeable["MarketAssetCode"] + "-" + tradeable["BaseCurrencyCode"]
-      crypto = CryptoPair.new(id: tradeable["MarketID"], name: name, 
+      crypto = Market.new(id: tradeable["MarketID"], name: name, 
         bid: tradeable["BidPrice"], ask: tradeable["AskPrice"], volume_24h: tradeable["BTCVolume"])
-      @exchange.add_crypto_pair(crypto)
+      @exchange.add_market(crypto)
     end
     @exchange
   end
 
-  def get_order_book(crypto_pair)
-    source = open(@order_book_url % crypto_pair.id).read
+  def get_order_book(market)
+    source = open(@order_book_url % market.id).read
     entries = JSON.parse(source)["result"]
     bids = entries["BuyOrders"]
     asks = entries["SellOrders"]

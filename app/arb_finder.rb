@@ -14,13 +14,13 @@ class ArbFinder
 
 
   def compare
-    @exchange1.crypto_pairs.each do |market1|
+    @exchange1.markets.each do |market1|
       
 
-      if @exchange2.has_crypto_pair?(crypto1)
-        crypto2 = @exchange2.get_crypto_pair_like(crypto1)
-        arb_opp = ArbOpp.new(crypto1, crypto2)
-        puts "#{crypto1.name} on both #{crypto1.exchange.name} and #{crypto2.exchange.name} with percent_diff #{'%.1f' % arb_opp.gain_percent}%"
+      if @exchange2.has_market?(market1)
+        market2 = @exchange2.get_market_like(market1)
+        arb_opp = ArbOpp.new(market1, market2)
+        puts "#{market1.name} on both #{market1.exchange.name} and #{market2.exchange.name} with percent_diff #{'%.1f' % arb_opp.gain_percent}%"
         if arb_opp.gain_percent > ARB_THRESHOLD_PERCENT && arb_opp.valid?
           arb_opp.calc_potential_profit
           @arb_opps.push(arb_opp)

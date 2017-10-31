@@ -11,9 +11,9 @@ RSpec.describe BinanceClient do
       
       exchange = binance_client.get_exchange()
       expect(exchange.name).to eq('binance')
-      expected_crypto = CryptoPair.new(name: 'ETH-BTC', bid: 0.05041800, ask: 0.05050000, volume_24h: nil)
+      expected_crypto = Market.new(name: 'ETH-BTC', bid: 0.05041800, ask: 0.05050000, volume_24h: nil)
       %i[name bid ask volume_24h].each do |value|
-        expect(exchange.crypto_pairs[0].send(value)).to eq(expected_crypto.send(value))
+        expect(exchange.markets[0].send(value)).to eq(expected_crypto.send(value))
       end
     end
   end
@@ -24,8 +24,8 @@ RSpec.describe BinanceClient do
       fixture = open("./spec/fixtures/binance_order_book.json").read;
       url_to_stub = binance_client.order_book_url.split('/')[2]
       stub_request(:any, Regexp.new(url_to_stub)).to_return(body: fixture)
-      crypto_pair = CryptoPair.new(name: 'SUB-BTC')
-      order_book = binance_client.get_order_book(crypto_pair)
+      market = Market.new(name: 'SUB-BTC')
+      order_book = binance_client.get_order_book(market)
       expect(order_book.bids.first.price).to eq(0.00002660)
       expect(order_book.bids.first.quantity).to eq(30847.00000000)
       expect(order_book.bids[1].price).to eq(0.00002624)

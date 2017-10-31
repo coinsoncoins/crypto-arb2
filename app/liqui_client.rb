@@ -25,14 +25,14 @@ class LiquiClient
   def parse_snapshot(snapshot)
     snapshot.each do |key, value| 
       name = key.gsub('_', '-').upcase
-      crypto = CryptoPair.new(name: name, bid: value["buy"], ask: value["sell"], volume_24h: value["vol"])
-      @exchange.add_crypto_pair(crypto)
+      crypto = Market.new(name: name, bid: value["buy"], ask: value["sell"], volume_24h: value["vol"])
+      @exchange.add_market(crypto)
     end
     @exchange
   end
 
-  def get_order_book(crypto_pair)
-    source = open(@order_book_url % crypto_pair_name_on_service(crypto_pair)).read
+  def get_order_book(market)
+    source = open(@order_book_url % market_name_on_service(market)).read
     entries = JSON.parse(source)
     if entries['error']
       raise RuntimeError.new("LiquiClient Error: #{entries['error']}")
@@ -50,8 +50,8 @@ class LiquiClient
     order_book.finish_adding_entries()
   end
 
-  def crypto_pair_name_on_service(crypto_pair)
-    crypto_pair.name.sub('-', '_').downcase
+  def market_name_on_service(market)
+    market.name.sub('-', '_').downcase
   end
 
 end

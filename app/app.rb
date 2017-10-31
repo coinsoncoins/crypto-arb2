@@ -33,13 +33,13 @@ def main()
 
   puts 'finding arb opps'
   arb_opps = []
-  exchanges = [bittrex_exchange] #, hitbtc_exchange, binance_exchange, poloniex_exchange, kucoin_exchange]
+  exchanges = [bittrex_exchange, hitbtc_exchange, binance_exchange, poloniex_exchange, kucoin_exchange]
   # [kucoin_exchange, 
   #   bittrex_exchange, hitbtc_exchange, liqui_exchange, cryptopia_exchange, 
   #   poloniex_exchange, binance_exchange]
     
 
-  exchange.each do |exchange|
+  exchanges.each do |exchange|
     arb_opps += ArbFinder.new(exchange, exchange).compare
   end
   # exchanges.each do |exchange1|

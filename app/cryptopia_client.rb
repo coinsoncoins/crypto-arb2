@@ -25,14 +25,14 @@ class CryptopiaClient
     snapshot.each do |tradeable|
       name = tradeable["Label"].split("/").join('-')
       name = @coin_name_remapper.map(name)
-      crypto = CryptoPair.new(name: name, bid: tradeable["BidPrice"], ask: tradeable["AskPrice"], volume_24h: tradeable["BaseVolume"])
-      @exchange.add_crypto_pair(crypto)
+      crypto = Market.new(name: name, bid: tradeable["BidPrice"], ask: tradeable["AskPrice"], volume_24h: tradeable["BaseVolume"])
+      @exchange.add_market(crypto)
     end
     @exchange
   end
 
-  def get_order_book(crypto_pair)
-    source = open(@order_book_url % crypto_pair_name_on_service(crypto_pair)).read
+  def get_order_book(market)
+    source = open(@order_book_url % market_name_on_service(market)).read
     entries = JSON.parse(source)["Data"]
     bids = entries["Buy"]
     asks = entries["Sell"]
@@ -46,9 +46,9 @@ class CryptopiaClient
     order_book.finish_adding_entries()
   end
 
-  def crypto_pair_name_on_service(crypto_pair)
-    name = @coin_name_remapper.unmap(crypto_pair.name)
-    name = crypto_pair.name.sub('-', '_')
+  def market_name_on_service(market)
+    name = @coin_name_remapper.unmap(market.name)
+    name = market.name.sub('-', '_')
   end
 
 end

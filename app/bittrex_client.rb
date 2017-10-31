@@ -23,14 +23,14 @@ class BittrexClient
   def parse_snapshot(snapshot)
     snapshot.each do |tradeable|
       name = tradeable["MarketName"].split("-").reverse.join('-')
-      crypto = CryptoPair.new(name: name, bid: tradeable["Bid"], ask: tradeable["Ask"], volume_24h: tradeable["BaseVolume"])
-      @exchange.add_crypto_pair(crypto)
+      crypto = Market.new(name: name, bid: tradeable["Bid"], ask: tradeable["Ask"], volume_24h: tradeable["BaseVolume"])
+      @exchange.add_market(crypto)
     end
     @exchange
   end
 
-  def get_order_book(crypto_pair)
-    source = open(@order_book_url % crypto_pair_name_on_service(crypto_pair)).read
+  def get_order_book(market)
+    source = open(@order_book_url % market_name_on_service(market)).read
     entries = JSON.parse(source)["result"]
     bids = entries["buy"]
     asks = entries["sell"]
@@ -44,7 +44,7 @@ class BittrexClient
     order_book.finish_adding_entries()
   end
 
-  def crypto_pair_name_on_service(crypto_pair)
-    crypto_pair.name.split('-').reverse.join('-')
+  def market_name_on_service(market)
+    market.name.split('-').reverse.join('-')
   end
 end

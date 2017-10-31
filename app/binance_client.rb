@@ -19,15 +19,15 @@ class BinanceClient
 
   def parse_snapshot(snapshot)
     snapshot.each do |tradeable|
-      name = CryptoPair.parse_base(tradeable["symbol"]).join('-')
-      crypto = CryptoPair.new(name: name, bid: tradeable["bidPrice"], ask: tradeable["askPrice"], volume_24h: nil)
-      @exchange.add_crypto_pair(crypto)
+      name = Market.parse_base(tradeable["symbol"]).join('-')
+      crypto = Market.new(name: name, bid: tradeable["bidPrice"], ask: tradeable["askPrice"], volume_24h: nil)
+      @exchange.add_market(crypto)
     end
     @exchange
   end
 
-  def get_order_book(crypto_pair)
-    source = open(@order_book_url % crypto_pair_name_on_service(crypto_pair)).read
+  def get_order_book(market)
+    source = open(@order_book_url % market_name_on_service(market)).read
     entries = JSON.parse(source)
     bids = entries["bids"]
     asks = entries["asks"]
@@ -41,8 +41,8 @@ class BinanceClient
     order_book.finish_adding_entries()
   end
 
-  def crypto_pair_name_on_service(crypto_pair)
-    crypto_pair.name.sub('-', '')
+  def market_name_on_service(market)
+    market.name.sub('-', '')
   end
 
 end

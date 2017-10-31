@@ -26,14 +26,14 @@ class PoloniexClient
     snapshot.each do |key, value|
       name = key.split('_').reverse.join('-') # BTC_BCN
       name = @coin_name_remapper.map(name)
-      crypto = CryptoPair.new(name: name, bid: value["highestBid"], ask: value["lowestAsk"], volume_24h: value["baseVolume"])
-      @exchange.add_crypto_pair(crypto)
+      crypto = Market.new(name: name, bid: value["highestBid"], ask: value["lowestAsk"], volume_24h: value["baseVolume"])
+      @exchange.add_market(crypto)
     end
     @exchange
   end
 
-  def get_order_book(crypto_pair)
-    source = open(@order_book_url % crypto_pair_name_on_service(crypto_pair)).read
+  def get_order_book(market)
+    source = open(@order_book_url % market_name_on_service(market)).read
     entries = JSON.parse(source)
     bids = entries["bids"]
     asks = entries["asks"]
@@ -47,9 +47,9 @@ class PoloniexClient
     order_book.finish_adding_entries()
   end
 
-  def crypto_pair_name_on_service(crypto_pair)
-    name = @coin_name_remapper.unmap(crypto_pair.name)
-    crypto_pair.name.split('-').reverse.join('_')
+  def market_name_on_service(market)
+    name = @coin_name_remapper.unmap(market.name)
+    market.name.split('-').reverse.join('_')
   end
 
 end

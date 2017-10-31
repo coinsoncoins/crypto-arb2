@@ -13,9 +13,9 @@ RSpec.describe LiquiClient do
 
       exchange = liqui_client.get_exchange()
       expect(exchange.name).to eq('liqui')
-      expected_crypto = CryptoPair.new(name: 'LTC-BTC', bid: 0.0097081, ask: 0.00973799, volume_24h: 49.682074394008394)
+      expected_crypto = Market.new(name: 'LTC-BTC', bid: 0.0097081, ask: 0.00973799, volume_24h: 49.682074394008394)
       %i[name bid ask volume_24h].each do |value|
-        expect(exchange.crypto_pairs[0].send(value)).to eq(expected_crypto.send(value))
+        expect(exchange.markets[0].send(value)).to eq(expected_crypto.send(value))
       end
     end
   end
@@ -26,8 +26,8 @@ RSpec.describe LiquiClient do
       fixture = open("./spec/fixtures/liqui_order_book.json").read;
       url_to_stub = liqui_client.order_book_url.split('/')[2]
       stub_request(:any, Regexp.new(url_to_stub)).to_return(body: fixture)
-      crypto_pair = CryptoPair.new(name: 'AST-BTC')
-      order_book = liqui_client.get_order_book(crypto_pair)
+      market = Market.new(name: 'AST-BTC')
+      order_book = liqui_client.get_order_book(market)
       expect(order_book.bids.first.price).to eq(0.00003991)
       expect(order_book.bids.first.quantity).to eq(149.34894156)
       expect(order_book.bids[1].price).to eq(0.00003988)
