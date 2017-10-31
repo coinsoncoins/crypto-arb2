@@ -1,5 +1,6 @@
 
 require './app/market'
+require './app/order_book_arber'
 
 class ArbOpp
   attr_reader :market1, :market2, :gain, :potential_profit, :amount_to_arb

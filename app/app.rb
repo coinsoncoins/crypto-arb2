@@ -22,9 +22,9 @@ def main()
   #puts 'etherdelta'; etherdelta_client = EtherDeltaClient.new.get_exchange()
   puts 'bittrex'; bittrex_exchange = BittrexClient.new.get_exchange()
   puts 'hitbtc'; hitbtc_exchange = HitBtcClient.new.get_exchange()
-  # puts 'cryptopia'; cryptopia_exchange = CryptopiaClient.new.get_exchange()
+  puts 'cryptopia'; cryptopia_exchange = CryptopiaClient.new.get_exchange()
   puts 'binance'; binance_exchange = BinanceClient.new.get_exchange()
-  # puts 'liqui'; liqui_exchange = LiquiClient.new.get_exchange()
+  puts 'liqui'; liqui_exchange = LiquiClient.new.get_exchange()
   puts 'poloniex'; poloniex_exchange = PoloniexClient.new.get_exchange()
   puts 'kucoin'; kucoin_exchange = KucoinClient.new.get_exchange()
   # #puts 'coinexchange'; coinexchange_client = CoinExchangeClient.new.get_exchange()
@@ -33,7 +33,8 @@ def main()
 
   puts 'finding arb opps'
   arb_opps = []
-  exchanges = [bittrex_exchange, hitbtc_exchange, binance_exchange, poloniex_exchange, kucoin_exchange]
+  exchanges = [bittrex_exchange, hitbtc_exchange, cryptopia_exchange, 
+    binance_exchange, liqui_exchange, poloniex_exchange, kucoin_exchange]
   # [kucoin_exchange, 
   #   bittrex_exchange, hitbtc_exchange, liqui_exchange, cryptopia_exchange, 
   #   poloniex_exchange, binance_exchange]
