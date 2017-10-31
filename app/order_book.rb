@@ -76,6 +76,7 @@ class OrderBook
       book2.bids.shift if highest_bid.quantity <= 0.0001
       total_profit += profit
       amount_to_arb += min_quantity
+      puts "buying #{min_quantity} at #{highest_bid.price} and selling at #{lowest_ask.price} for profit #{profit} and total profit #{total_profit}"
     end
     {total_profit: total_profit, amount_to_arb: amount_to_arb}
   end

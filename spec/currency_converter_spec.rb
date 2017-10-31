@@ -4,8 +4,7 @@ require './app/currency_converter'
 
 RSpec.describe CurrencyConverter do
   before do
-    fixture = open("./spec/fixtures/coinmarketcap_tickers.json").read;
-    stub_request(:any, CoinMarketCapClient.url).to_return(body: fixture)
+    stub_coinmarketcap_client
   end
   context "methods" do
     it do
