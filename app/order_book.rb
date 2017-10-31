@@ -57,11 +57,11 @@ class OrderBook
     cost
   end
 
-  def arb_order_books(other_book)
-    self.verify_ordered()
-    other_book.verify_ordered()
+  def self.arb_order_books(book1, book2)
+    book1.verify_ordered()
+    book2.verify_ordered()
     total_profit, amount_to_arb = 0.0, 0
-    book1, book2 = self.deep_clone, other_book.deep_clone
+    book1, book2 = book1.deep_clone, book2.deep_clone
     while true
       lowest_ask = book1.asks.first
       highest_bid = book2.bids.first

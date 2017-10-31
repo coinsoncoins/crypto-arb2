@@ -53,7 +53,7 @@ RSpec.describe OrderBook do
       book2.add_entry(quantity: 100, price: 2, side: 'bid')
       book2.add_entry(quantity: 100, price: 1, side: 'bid')
       book2.finish_adding_entries
-      result = book1.arb_order_books(book2)
+      result = OrderBook.arb_order_books(book1, book2)
       expect(result[:total_profit]).to eq(600)
       expect(result[:amount_to_arb]).to eq(200)
     end
@@ -72,7 +72,7 @@ RSpec.describe OrderBook do
       book2.add_entry(quantity: 70, price: 2, side: 'bid')
       book2.add_entry(quantity: 33, price: 1.5, side: 'bid')
       book2.finish_adding_entries
-      result = book1.arb_order_books(book2)
+      result = OrderBook.arb_order_books(book1, book2)
       expect(result[:total_profit]).to eq(179.81)
       expect(result[:amount_to_arb]).to eq(180.8)
     end
