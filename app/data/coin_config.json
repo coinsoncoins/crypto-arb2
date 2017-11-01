@@ -6,11 +6,15 @@
     ],
     "cryptopia": [
       "QTUM-BTC",
-      "BTG-BTC"
+      "BTG-BTC",
+      "DSH-BTC"
     ],
     "binance": [
       "BTG-BTC",
       "BTG-ETH"
+    ],
+    "hitbtc": [
+      "BCC-BTC"
     ]
   }
 }
