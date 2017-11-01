@@ -14,7 +14,8 @@
       "BTG-ETH"
     ],
     "hitbtc": [
-      "BCC-BTC"
+      "BCC-BTC",
+      "BCC-ETH"
     ]
   }
 }
