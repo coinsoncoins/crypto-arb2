@@ -1,3 +1,16 @@
 {
-  "ignore": ["BTG"]
+  "marketsToIgnore": {
+    "poloniex": [
+      "XVC-BTC",
+      "BTG-BTC"
+    ],
+    "cryptopia": [
+      "QTUM-BTC",
+      "BTG-BTC"
+    ],
+    "binance": [
+      "BTG-BTC",
+      "BTG-ETH"
+    ]
+  }
 }

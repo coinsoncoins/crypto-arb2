@@ -1,5 +1,6 @@
 
 require './app/arb_opp'
+require './app/market_ignore'
 
 class ArbFinder
   attr_reader :arb_opps
@@ -15,8 +16,10 @@ class ArbFinder
 
   def compare
     @exchange1.markets.each do |market1|
+      next if MarketIgnore.ignore?(market1)
       markets_to_compare = @exchange2.get_all_markets_for_crypto(market1.crypto)
       markets_to_compare.each do |market2|
+        next if MarketIgnore.ignore?(market2)
         next if market1 == market2
         next if !supported_base?(market1) || !supported_base?(market2)
         puts "checking arb_opps #{market1.name} at #{market1.exchange.name} to #{market2.name} at #{market2.exchange.name}"

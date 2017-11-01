@@ -48,7 +48,9 @@ def main()
 
   arb_opps = arb_opps.sort_by { |opp| opp.potential_profit }.reverse
   arb_opps.each do |arp_opp|
-    puts MessageFormatter.arb_opp(arp_opp)
+    if arb_opp.potential_profit > 30.0
+      puts MessageFormatter.arb_opp(arp_opp)
+    end
   end
 end
 

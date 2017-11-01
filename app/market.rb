@@ -1,4 +1,6 @@
 
+require './app/currency_converter'
+
 class BadMarketNameError < StandardError
   attr_reader :name
   def initialize(message, name)
