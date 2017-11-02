@@ -1,11 +1,13 @@
 
 require './app/order_book'
+require './app/arb_transaction'
 
 class OrderBookArber
-  attr_reader :book1, :book2
+  attr_reader :book1, :book2, :transactions
   def initialize(book1, book2)
     @book1 = book1
     @book2 = book2
+    @transactions = []
   end
 
   def arb()
@@ -27,6 +29,8 @@ class OrderBookArber
       book2.bids.shift if highest_bid.quantity <= 0.0001
       total_profit += profit
       amount_to_arb += min_quantity
+      @transactions.push(ArbTransaction.new(buy_at: highest_bid.price_usd, sell_at: lowest_ask.price_usd, 
+        quantity: min_quantity, profit: profit, total_profit: total_profit))
       puts "buying #{min_quantity} at #{highest_bid.price_usd} and selling at #{lowest_ask.price_usd} for profit #{profit} and total profit #{total_profit}"
     end
     {total_profit: total_profit, amount_to_arb: amount_to_arb}

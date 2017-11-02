@@ -23,10 +23,9 @@ def main()
   puts "1 ETH = #{CurrencyConverter.eth_to_btc(1)} BTC"
   puts "getting exchange data..."
   
-  #puts 'etherdelta'; etherdelta_client = EtherDeltaClient.new.get_exchange()
   exchanges = []
-  arb_opps = []
   puts 'bittrex'; bittrex_exchange = BittrexClient.new.get_exchange(); exchanges.push(bittrex_exchange)
+  puts 'etherdelta'; etherdelta_client = EtherDeltaClient.new.get_exchange(); exchanges.push(etherdelta_client)
   puts 'hitbtc'; hitbtc_exchange = HitBtcClient.new.get_exchange(); exchanges.push(hitbtc_exchange)
   puts 'cryptopia'; cryptopia_exchange = CryptopiaClient.new.get_exchange(); exchanges.push(cryptopia_exchange)
   puts 'binance'; binance_exchange = BinanceClient.new.get_exchange(); exchanges.push(binance_exchange)
@@ -39,14 +38,14 @@ def main()
   # #kraken_exchange = KrakenClient.new.get_exchange()
   # #livecoin_exchange = LivecoinClient.new.get_exchange()
 
-  puts 'finding arb opps'
   
-  # exchanges = [bittrex_exchange, hitbtc_exchange, cryptopia_exchange, 
-  #   binance_exchange, liqui_exchange, poloniex_exchange, kucoin_exchange]
-  # [kucoin_exchange, 
-  #   bittrex_exchange, hitbtc_exchange, liqui_exchange, cryptopia_exchange, 
-  #   poloniex_exchange, binance_exchange]
-    
+  find_arb_opps(exchanges)
+end
+
+def find_arb_opps(exchanges)
+  puts 'finding arb opps'
+  arb_opps = []
+  output = ""
 
   exchanges.each do |exchange1|
     exchanges.each do |exchange2|
@@ -54,13 +53,23 @@ def main()
     end
   end
 
+
+  now = Time.now.strftime("%m/%d/%Y %H:%M")
+  output += "*******\n#{now}\n"
+
   arb_opps = arb_opps.sort_by { |opp| opp.potential_profit }.reverse
   arb_opps.each do |arb_opp|
-    if arb_opp.potential_profit > 30.0
-      puts MessageFormatter.arb_opp(arb_opp)
+    if arb_opp.potential_profit > 40.0
+      message = MessageFormatter.arb_opp(arb_opp)
+      puts message
+      output += message + "\n"
     end
   end
+
+  output += "\n\n"
+  File.open("arb_opps.txt", "a"){|f| f.write(output)}
 end
+
 
 # puts 'bittrex / binance'
 # result = MarketComparer.compare(bittrex_markets, binance_markets)

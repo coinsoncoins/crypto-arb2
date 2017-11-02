@@ -7,7 +7,10 @@
     "cryptopia": [
       "QTUM-BTC",
       "BTG-BTC",
-      "DSH-BTC"
+      "DSH-BTC",
+      "BTCS-BTC",
+      "WRC-BTC",
+      "ARC-BTC"
     ],
     "binance": [
       "BTG-BTC",
@@ -17,7 +20,17 @@
       "BCC-BTC",
       "BCC-ETH",
       "ADX-BTC",
-      "ADX-ETH"
+      "ADX-ETH",
+      "AMB-BTC",
+      "AMB-ETH",
+      "CAT-BTC",
+      "CAT-ETH",
+      "FUEL-BTC",
+      "FUEL-ETH"
+    ],
+    "etherdelta": [
+      "BUS-ETH",
+      "BTG-ETH"
     ]
   }
 }

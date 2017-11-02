@@ -3,7 +3,7 @@ require './app/market'
 require './app/order_book_arber'
 
 class ArbOpp
-  attr_reader :market1, :market2, :gain, :potential_profit, :amount_to_arb
+  attr_reader :market1, :market2, :gain, :potential_profit, :amount_to_arb, :arber
 
   def initialize(market1, market2)
     @market1 = market1
@@ -19,7 +19,8 @@ class ArbOpp
     begin
       book1 = @market1.get_order_book
       book2 = @market2.get_order_book
-      result = OrderBookArber.new(book1, book2).arb
+      @arber = OrderBookArber.new(book1, book2)
+      result = @arber.arb
       @potential_profit = result[:total_profit]
       @amount_to_arb = result[:amount_to_arb]
     rescue RuntimeError => e
