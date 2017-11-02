@@ -29,6 +29,13 @@ class Market
     end
   end
 
+  # def bid
+  #   @bid
+  # end
+
+  # def bid=(value)
+  # end
+
   def valid?()
     @bid > 0.00000001 && @ask > 0.00000001
   end

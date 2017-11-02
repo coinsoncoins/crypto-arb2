@@ -4,36 +4,33 @@ require 'json'
 require './app/exchange'
 require './app/order_book'
 require 'pry'
+require 'socket.io-client-simple'
+
 
 class EtherDeltaClient
-  attr_accessor :url, :exchange, :order_book_url
+  attr_accessor :url, :exchange, :path_to_data
   def initialize()
     @exchange = Exchange.new('etherdelta', self)
-    @url = "https://api.etherdelta.com/returnTicker"
-    @order_book_url = "https://api.etherdelta.com/orders/%s/0"
+    @path_to_data = './exchange_data/etherdelta'
   end
 
   def get_exchange()
-    summaries = JSON.parse(open(@url).read)
-    parse_summaries(summaries)
-  end
-
-
-  def parse_summaries(summaries)
-    summaries.each do |symbol, tradeable|
-      name = symbol.split("_").reverse.join('-')
-      crypto = Market.new(token_addr: tradeable["tokenAddr"], name: name, 
-        bid: tradeable["bid"], ask: tradeable["ask"], volume_24h: tradeable["baseVolume"])
-      @exchange.add_market(crypto)
+    Dir.foreach(@path_to_data) do |filename|
+      next if filename == '.' or filename == '..'
+      market = Market.new(name: filename.split('.')[0])
+      order_book = get_order_book(market)
+      market.bid = order_book.bids.first.price
+      market.ask = order_book.asks.first.price
+      @exchange.add_market(market)
     end
     @exchange
   end
 
   def get_order_book(market)
-    source = open(@order_book_url % market.token_addr).read
-    entries = JSON.parse(source)
-    bids = entries["buys"]
-    asks = entries["sells"]
+    filename = "#{@path_to_data}/#{market.name}.json"
+    contents = JSON.parse(open(filename).read)
+    bids = contents["orders"]["buys"]
+    asks = contents["orders"]["sells"] 
     order_book = OrderBook.new(market)
     bids.each do |bid|
       order_book.add_entry(quantity: bid["amount"], price: bid["price"], side: 'bid')
@@ -44,7 +41,11 @@ class EtherDeltaClient
     order_book.finish_adding_entries()
   end
 
-  def market_name_on_service(market)
-    market.name.split('-').reverse.join('_')
+  def format_symbol(original_symbol)
+    original_symbol.split("_").reverse.join('-')
+  end
+
+  def original_symbol(symbol)
+    symbol.split('-').reverse.join('_')
   end
 end

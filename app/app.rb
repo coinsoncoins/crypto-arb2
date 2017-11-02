@@ -17,6 +17,10 @@ require './app/message_formatter'
 
 def main()
 
+  puts "BTCUSD: #{CurrencyConverter.BTCUSD}"
+  puts "ETHUSD: #{CurrencyConverter.ETHUSD}"
+  puts "1 BTC = #{CurrencyConverter.btc_to_eth(1)} ETH"
+  puts "1 ETH = #{CurrencyConverter.eth_to_btc(1)} BTC"
   puts "getting exchange data..."
   
   #puts 'etherdelta'; etherdelta_client = EtherDeltaClient.new.get_exchange()

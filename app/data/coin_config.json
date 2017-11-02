@@ -15,7 +15,9 @@
     ],
     "hitbtc": [
       "BCC-BTC",
-      "BCC-ETH"
+      "BCC-ETH",
+      "ADX-BTC",
+      "ADX-ETH"
     ]
   }
 }
