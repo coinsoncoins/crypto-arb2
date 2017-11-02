@@ -33,10 +33,10 @@ class EtherDeltaClient
     asks = contents["orders"]["sells"] 
     order_book = OrderBook.new(market)
     bids.each do |bid|
-      order_book.add_entry(quantity: bid["amount"], price: bid["price"], side: 'bid')
+      order_book.add_entry(quantity: bid["ethAvailableVolume"], price: bid["price"], side: 'bid')
     end
     asks.each do |ask|
-      order_book.add_entry(quantity: ask["amount"], price: ask["price"], side: 'ask')
+      order_book.add_entry(quantity: ask["ethAvailableVolume"], price: ask["price"], side: 'ask')
     end
     order_book.finish_adding_entries()
   end

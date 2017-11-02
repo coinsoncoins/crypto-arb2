@@ -12,14 +12,12 @@ end
 
 class Market
 
-  attr_accessor :name, :bid, :ask, :exchange, :order_book, :id, :token_addr, :bid_usd, :ask_usd
+  attr_accessor :name, :bid, :ask, :exchange, :order_book, :id, :token_addr
   attr_accessor :volume_24h # volume is denominated in base currency
   def initialize(name:, bid: nil, ask: nil, volume_24h: nil, exchange: nil, id: nil, token_addr: nil)
     @name = name
     @bid = bid.to_f
-    @bid_usd = CurrencyConverter.to_usd(@bid, base)
     @ask = ask.to_f
-    @ask_usd = CurrencyConverter.to_usd(@ask, base)
     @volume_24h = volume_24h.to_f
     @exchange = exchange
     @id = id.to_i
@@ -29,12 +27,14 @@ class Market
     end
   end
 
-  # def bid
-  #   @bid
-  # end
+  def bid_usd
+    CurrencyConverter.to_usd(@bid, base)
+  end
 
-  # def bid=(value)
-  # end
+  def ask_usd
+    CurrencyConverter.to_usd(@ask, base)
+  end
+
 
   def valid?()
     @bid > 0.00000001 && @ask > 0.00000001
@@ -62,7 +62,7 @@ class Market
   end
 
   def base
-    @name.split('-')[1]
+    @name.split('-')[-1]
   end
 
   def get_order_book

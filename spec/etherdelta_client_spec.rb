@@ -6,31 +6,30 @@ RSpec.describe EtherDeltaClient do
   before do
     stub_coinmarketcap_client
   end
-  context "#format_symbol" do
-    it do 
-      etherdelta_client = EtherDeltaClient.new
-      expect(etherdelta_client.format_symbol("ETH_DOVU")).to eq("DOVU-ETH")
-    end
-  end
+  # context "#format_symbol" do
+  #   it do 
+  #     etherdelta_client = EtherDeltaClient.new
+  #     expect(etherdelta_client.format_symbol("ETH_DOVU")).to eq("DOVU-ETH")
+  #   end
+  # end
 
-  context "#original_symbol" do
-    it do 
-      etherdelta_client = EtherDeltaClient.new
-      expect(etherdelta_client.original_symbol("DOVU-ETH")).to eq("ETH_DOVU")
-    end
-  end
+  # context "#original_symbol" do
+  #   it do 
+  #     etherdelta_client = EtherDeltaClient.new
+  #     expect(etherdelta_client.original_symbol("DOVU-ETH")).to eq("ETH_DOVU")
+  #   end
+  # end
 
   
   context "#get_exchange" do
     it "returns the exchange data" do
       etherdelta_client = EtherDeltaClient.new
-      #fixture = open("./spec/fixtures/etherdelta_market_summaries.json").read
-      #stub_request(:any, etherdelta_client.url).to_return(body: fixture)
+      etherdelta_client.path_to_data = "./spec/fixtures/exchange_data/etherdelta"
       exchange = etherdelta_client.get_exchange()
       expect(exchange.name).to eq('etherdelta')
-      expected_crypto = Market.new(name: 'MOD-ETH', token_addr: "0x957c30ab0426e0c93cd8241e2c60392d08c6ac8e", 
-        bid: 0.00485, ask: 0.005, volume_24h: 2564.891)
-      %i[name bid ask volume_24h token_addr].each do |value|
+      expected_crypto = Market.new(name: 'PAY-ETH',
+        bid: 0.00522, ask: 0.0054753)
+      %i[name bid ask volume_24h bid_usd ask_usd].each do |value|
         expect(exchange.markets[0].send(value)).to eq(expected_crypto.send(value))
       end
     end
@@ -38,23 +37,33 @@ RSpec.describe EtherDeltaClient do
 
   context do
     it do
-      require './app/etherdelta_client'
-      client = EtherDeltaClient.new
-      exchange = client.get_exchange
-      market = exchange.markets[0]
-      client.connect_socket
-      client.request_order_book(market)
+      etherdelta_client = EtherDeltaClient.new
+      exchange = etherdelta_client.get_exchange()
+      exchange.markets[0]
+
     end
   end
 
-  context "#save_order_book_file" do
-    it do
-      data = JSON.parse(open("./file.json").read)
-      client = EtherDeltaClient.new
-      exchange = client.get_exchange
-      client.save_order_book_file(data)
-    end
-  end
+
+  # context do
+  #   it do
+  #     require './app/etherdelta_client'
+  #     client = EtherDeltaClient.new
+  #     exchange = client.get_exchange
+  #     market = exchange.markets[0]
+  #     client.connect_socket
+  #     client.request_order_book(market)
+  #   end
+  # end
+
+  # context "#save_order_book_file" do
+  #   it do
+  #     data = JSON.parse(open("./file.json").read)
+  #     client = EtherDeltaClient.new
+  #     exchange = client.get_exchange
+  #     client.save_order_book_file(data)
+  #   end
+  # end
 
 
 
