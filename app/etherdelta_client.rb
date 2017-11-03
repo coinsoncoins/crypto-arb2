@@ -19,6 +19,7 @@ class EtherDeltaClient
       next if filename == '.' or filename == '..'
       market = Market.new(name: filename.split('.')[0])
       order_book = get_order_book(market)
+      next if !order_book.bids.first || !order_book.asks.first
       market.bid = order_book.bids.first.price
       market.ask = order_book.asks.first.price
       @exchange.add_market(market)
