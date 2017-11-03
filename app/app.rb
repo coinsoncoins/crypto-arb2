@@ -13,6 +13,7 @@ require './app/etherdelta_client'
 require './app/arb_finder'
 require './app/arb_opp'
 require './app/message_formatter'
+require './app/telegram_messenger'
 
 
 def main()
@@ -58,13 +59,18 @@ def find_arb_opps(exchanges)
   output += "*******\n#{now}\n"
 
   arb_opps = arb_opps.sort_by { |opp| opp.potential_profit }.reverse
+  arb_opps_of_note = []
   arb_opps.each do |arb_opp|
-    if arb_opp.potential_profit > 40.0
+    if arb_opp.potential_profit > 50.0
       message = MessageFormatter.arb_opp(arb_opp)
       puts message
       output += message + "\n"
+      arb_opps_of_note.push(arb_opp)
     end
   end
+
+  message = MessageFormatter.to_telegram(arb_opps_of_note)
+  TelegramMessenger.send(message)
 
   output += "\n\n"
   File.open("arb_opps.txt", "a"){|f| f.write(output)}

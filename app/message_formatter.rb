@@ -18,4 +18,13 @@ class MessageFormatter
     output
   end
 
+  def self.to_telegram(arb_opps)
+    message = ''
+    arb_opps.each do |arb_opp|
+      message += "#{arb_opp.market1.name} (#{arb_opp.market1.exchange.name}) - #{arb_opp.market2.name} (#{arb_opp.market2.exchange.name}) " \
+      "$#{('%.2f' % arb_opp.potential_profit)}\n"
+    end
+    message
+  end
+
 end

@@ -8,3 +8,4 @@ gem "rspec"
 gem "pry"
 gem 'webmock'
 gem 'activesupport'
+gem 'telegram-bot-ruby'
