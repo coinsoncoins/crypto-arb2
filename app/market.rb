@@ -49,7 +49,7 @@ class Market
   # end
 
   def self.parse_base(name)
-    base = /BTC$|ETH$|LTC$|EUR$|CAD$|GBP$|JPY$|USD$|USTD$|USDT$/.match(name).to_s
+    base = /BTC$|ETH$|LTC$|EUR$|CAD$|GBP$|JPY$|USD$|USTD$|USDT$|BNB$/.match(name).to_s
     if base.to_s.strip.empty?
       raise BadMarketNameError.new("Poorly formatted Market name: #{name}", name)
     end

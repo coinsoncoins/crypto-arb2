@@ -30,7 +30,8 @@
     ],
     "etherdelta": [
       "BUS-ETH",
-      "BTG-ETH"
+      "BTG-ETH",
+      "CNX-ETH"
     ]
   }
 }

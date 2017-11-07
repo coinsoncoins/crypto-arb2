@@ -44,12 +44,12 @@ def main()
 end
 
 def find_arb_opps(exchanges)
-  puts 'finding arb opps'
   arb_opps = []
   output = ""
 
   exchanges.each do |exchange1|
     exchanges.each do |exchange2|
+      puts "#{exchange1.name} to #{exchange2.name}"
       arb_opps += ArbFinder.new(exchange1, exchange2).compare
     end
   end
@@ -72,8 +72,7 @@ def find_arb_opps(exchanges)
   message = MessageFormatter.to_telegram(arb_opps_of_note)
   TelegramMessenger.send(message)
 
-  output += "\n\n"
-  File.open("arb_opps.txt", "a"){|f| f.write(output)}
+  File.open("arb_opps.txt", "w"){|f| f.write(output)}
 end
 
 

@@ -32,7 +32,6 @@ class OrderBookArber
       @transactions.push(ArbTransaction.new(buy_at: lowest_ask.price, buy_at_usd: lowest_ask.price_usd, 
         sell_at: highest_bid.price, sell_at_usd: highest_bid.price_usd,
         quantity: min_quantity, profit: profit, total_profit: total_profit))
-      puts "buying #{min_quantity} at #{highest_bid.price_usd} and selling at #{lowest_ask.price_usd} for profit #{profit} and total profit #{total_profit}"
     end
     {total_profit: total_profit, amount_to_arb: amount_to_arb}
   end
