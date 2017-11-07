@@ -4,7 +4,6 @@ require 'json'
 require './app/exchange'
 require './app/order_book'
 require 'pry'
-require 'socket.io-client-simple'
 
 
 class EtherDeltaClient
