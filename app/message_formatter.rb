@@ -22,7 +22,7 @@ class MessageFormatter
     message = ''
     arb_opps.each do |arb_opp|
       message += "#{arb_opp.market1.name} (#{arb_opp.market1.exchange.name}) - #{arb_opp.market2.name} (#{arb_opp.market2.exchange.name}) " \
-      "$#{('%.2f' % arb_opp.potential_profit)}\n"
+      "$#{('%.2f' % arb_opp.potential_profit)} (#{arb_opp.gain_percent.round(1)}%) ($#{'%.2f' % (arb_opp.market1.ask_usd * arb_opp.amount_to_arb)})\n"
     end
     message
   end
