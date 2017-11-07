@@ -69,7 +69,7 @@ def find_arb_opps(exchanges)
     end
   end
 
-  File.open("arb_opps.txt", "w"){|f| f.write(output)}
+  File.open("./public/arb_opps.txt", "w"){|f| f.write(output)}
   message = MessageFormatter.to_telegram(arb_opps_of_note)
   TelegramMessenger.send(message)
 end

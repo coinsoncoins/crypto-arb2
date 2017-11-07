@@ -32,10 +32,14 @@ GEM
     method_source (0.9.0)
     minitest (5.10.3)
     multipart-post (2.0.0)
+    mustermann (1.0.1)
     pry (0.11.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     public_suffix (3.0.0)
+    rack (2.0.3)
+    rack-protection (2.0.0)
+      rack
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -50,11 +54,17 @@ GEM
       rspec-support (~> 3.7.0)
     rspec-support (3.7.0)
     safe_yaml (1.0.4)
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0)
+      tilt (~> 2.0)
     telegram-bot-ruby (0.8.5)
       faraday
       inflecto
       virtus
     thread_safe (0.3.6)
+    tilt (2.0.8)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     virtus (1.0.5)
@@ -74,6 +84,7 @@ DEPENDENCIES
   activesupport
   pry
   rspec
+  sinatra
   telegram-bot-ruby
   webmock
 
