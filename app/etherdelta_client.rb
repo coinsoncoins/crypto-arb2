@@ -4,6 +4,7 @@ require 'json'
 require './app/exchange'
 require './app/order_book'
 require 'pry'
+require 'httparty'
 
 
 class EtherDeltaClient

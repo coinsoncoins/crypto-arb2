@@ -3,6 +3,7 @@ require 'open-uri'
 require 'json'
 require './app/exchange'
 require './app/currency_converter'
+require 'httparty'
 
 class LivecoinClient
   attr_accessor :url, :exchange

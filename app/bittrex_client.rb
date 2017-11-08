@@ -4,6 +4,7 @@ require 'json'
 require './app/exchange'
 require './app/order_book'
 require 'pry'
+require 'httparty'
 
 class BittrexClient
   attr_accessor :url, :exchange, :order_book_url
@@ -30,8 +31,9 @@ class BittrexClient
   end
 
   def get_order_book(market)
-    source = open(@order_book_url % market_name_on_service(market)).read
-    entries = JSON.parse(source)["result"]
+    url = @order_book_url % market_name_on_service(market)
+    response = HTTParty.get(url, { timeout: 10 })
+    entries = JSON.parse(response.body)["result"]
     bids = entries["buy"]
     asks = entries["sell"]
     order_book = OrderBook.new(market)

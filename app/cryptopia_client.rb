@@ -4,6 +4,7 @@ require 'json'
 require './app/exchange'
 require './app/order_book'
 require './app/coin_name_remapper'
+require 'httparty'
 
 class CryptopiaClient
   attr_accessor :url, :exchange, :order_book_url
@@ -32,8 +33,9 @@ class CryptopiaClient
   end
 
   def get_order_book(market)
-    source = open(@order_book_url % market_name_on_service(market)).read
-    entries = JSON.parse(source)["Data"]
+    url = @order_book_url % market_name_on_service(market)
+    response = HTTParty.get(url, { timeout: 10 })
+    entries = JSON.parse(response.body)["Data"]
     bids = entries["Buy"]
     asks = entries["Sell"]
     order_book = OrderBook.new(market)

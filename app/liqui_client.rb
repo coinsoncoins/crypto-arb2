@@ -3,6 +3,7 @@ require 'open-uri'
 require 'json'
 require './app/exchange'
 require './app/order_book'
+require 'httparty'
 
 class LiquiClient
   attr_accessor :url, :exchange, :trade_pairs_url, :order_book_url
@@ -32,10 +33,11 @@ class LiquiClient
   end
 
   def get_order_book(market)
-    source = open(@order_book_url % market_name_on_service(market)).read
-    entries = JSON.parse(source)
+    url = @order_book_url % market_name_on_service(market)
+    response = HTTParty.get(url, { timeout: 10 })
+    entries = JSON.parse(response.body)
     if entries['error']
-      raise RuntimeError.new("LiquiClient Error: #{entries['error']}")
+      raise RuntimeError.new("LiquiClient Error: #{entries['error']} on #{market.name}")
     end
     entries = entries[entries.keys.first]
     bids = entries["bids"]

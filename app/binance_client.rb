@@ -3,6 +3,7 @@ require 'open-uri'
 require 'json'
 require './app/exchange'
 require './app/order_book'
+require 'httparty'
 
 class BinanceClient
   attr_accessor :url, :exchange, :order_book_url
@@ -31,8 +32,9 @@ class BinanceClient
   end
 
   def get_order_book(market)
-    source = open(@order_book_url % market_name_on_service(market)).read
-    entries = JSON.parse(source)
+    url = @order_book_url % market_name_on_service(market)
+    response = HTTParty.get(url, { timeout: 10 })
+    entries = JSON.parse(response.body)
     bids = entries["bids"]
     asks = entries["asks"]
     order_book = OrderBook.new(market)

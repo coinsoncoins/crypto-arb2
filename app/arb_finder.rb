@@ -38,7 +38,7 @@ class ArbFinder
       #   end
       # end
     end
-    @arb_opps.sort_by { |a| a.potential_profit }.reverse
+    @arb_opps.compact.sort_by { |a| a.potential_profit }.reverse
   end
 
   def supported_base?(market)

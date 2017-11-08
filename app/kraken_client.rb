@@ -2,6 +2,7 @@
 require 'open-uri'
 require 'json'
 require './app/exchange'
+require 'httparty'
 
 class KrakenClient
   attr_accessor :url, :exchange, :trade_pairs_url

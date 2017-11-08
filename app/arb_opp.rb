@@ -1,6 +1,7 @@
 
 require './app/market'
 require './app/order_book_arber'
+require 'httparty'
 
 class ArbOpp
   attr_reader :market1, :market2, :gain, :potential_profit, :amount_to_arb, :arber
@@ -23,6 +24,8 @@ class ArbOpp
       result = @arber.arb
       @potential_profit = result[:total_profit]
       @amount_to_arb = result[:amount_to_arb]
+    rescue Net::OpenTimeout => e
+      puts "timeout error on #{market1.name} (#{market1.exchange.name}-#{market2.exchange.name}), skipping"
     rescue RuntimeError => e
       @potential_profit, @amount_to_arb = 0.0, 0
       puts e

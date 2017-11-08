@@ -4,6 +4,7 @@ require 'json'
 require './app/exchange'
 require './app/order_book'
 require 'pry'
+require 'httparty'
 
 class CoinExchangeClient
   attr_accessor :url, :exchange, :order_book_url, :markets_url
@@ -36,8 +37,9 @@ class CoinExchangeClient
   end
 
   def get_order_book(market)
-    source = open(@order_book_url % market.id).read
-    entries = JSON.parse(source)["result"]
+    url = @order_book_url % market.id
+    response = HTTParty.get(url, { timeout: 10 })
+    entries = JSON.parse(response.body)["result"]
     bids = entries["BuyOrders"]
     asks = entries["SellOrders"]
     order_book = OrderBook.new(market)
