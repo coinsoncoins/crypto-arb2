@@ -10,7 +10,8 @@
       "DSH-BTC",
       "BTCS-BTC",
       "WRC-BTC",
-      "ARC-BTC"
+      "ARC-BTC",
+      "PIVX-BTC"
     ],
     "binance": [
       "BTG-BTC",
@@ -26,12 +27,14 @@
       "CAT-BTC",
       "CAT-ETH",
       "FUEL-BTC",
-      "FUEL-ETH"
+      "FUEL-ETH",
+      "WTT-BTC"
     ],
     "etherdelta": [
       "BUS-ETH",
       "BTG-ETH",
-      "CNX-ETH"
+      "CNX-ETH",
+      "SMART-ETH"
     ]
   }
 }

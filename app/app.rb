@@ -30,7 +30,7 @@ def main()
   puts 'hitbtc'; hitbtc_exchange = HitBtcClient.new.get_exchange(); exchanges.push(hitbtc_exchange)
   puts 'cryptopia'; cryptopia_exchange = CryptopiaClient.new.get_exchange(); exchanges.push(cryptopia_exchange)
   puts 'binance'; binance_exchange = BinanceClient.new.get_exchange(); exchanges.push(binance_exchange)
-  puts 'liqui'; liqui_exchange = LiquiClient.new.get_exchange(); exchanges.push(liqui_exchange)
+  #puts 'liqui'; liqui_exchange = LiquiClient.new.get_exchange(); exchanges.push(liqui_exchange)
   puts 'poloniex'; poloniex_exchange = PoloniexClient.new.get_exchange(); exchanges.push(poloniex_exchange)
   puts 'kucoin'; kucoin_exchange = KucoinClient.new.get_exchange(); exchanges.push(kucoin_exchange)
 
@@ -72,6 +72,7 @@ def find_arb_opps(exchanges)
   File.open("./public/arb_opps.txt", "w"){|f| f.write(output)}
   message = MessageFormatter.to_telegram(arb_opps_of_note)
   TelegramMessenger.send(message)
+  puts message
 end
 
 

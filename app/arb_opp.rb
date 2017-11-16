@@ -18,6 +18,7 @@ class ArbOpp
 
   def calc_potential_profit
     begin
+      @potential_profit, @amount_to_arb = 0.0, 0
       book1 = @market1.get_order_book
       book2 = @market2.get_order_book
       @arber = OrderBookArber.new(book1, book2)
@@ -26,8 +27,7 @@ class ArbOpp
       @amount_to_arb = result[:amount_to_arb]
     rescue Net::OpenTimeout => e
       puts "timeout error on #{market1.name} (#{market1.exchange.name}-#{market2.exchange.name}), skipping"
-    rescue RuntimeError => e
-      @potential_profit, @amount_to_arb = 0.0, 0
+    rescue StandardError => e
       puts e
     end
     @potential_profit

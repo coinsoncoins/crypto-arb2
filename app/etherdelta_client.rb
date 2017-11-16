@@ -17,7 +17,7 @@ class EtherDeltaClient
   def get_exchange()
     Dir.foreach(@path_to_data) do |filename|
       next if filename == '.' or filename == '..'
-      market = Market.new(name: filename.split('.')[0])
+      market = Market.new(name: filename.sub(/\.json$/, ''))
       order_book = get_order_book(market)
       next if !order_book.bids.first || !order_book.asks.first
       market.bid = order_book.bids.first.price
